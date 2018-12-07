@@ -21,7 +21,13 @@ class AuthController extends Controller
 
         if(Auth::guard('manager')->attempt(['username'=>$request->username,'password'=>$request->password])){
 
-            return redirect()->route('settings');
+            if(DB::table('restaurants')->first()->complete == 1){
+
+                return redirect()->route('orders');
+            }else{
+                return redirect()->route('settings');
+            }
+
         }else if(Auth::guard('cashier')->attempt(['username'=>$request->username,'password'=>$request->password])){
 
             return redirect()->route('orders');
