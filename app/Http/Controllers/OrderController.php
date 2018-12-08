@@ -378,8 +378,8 @@ class OrderController extends Controller
                     'message' => 'مشترک گرامی، تنها ۲۰ سفارش دیگر قابل ثبت می باشد. برای خرید نسخه کامل این برنامه، با شماره ۰۹۱۰۴۹۶۳۷۳۴ و یا ۰۹۳۷۱۸۶۹۵۶۸ تماس بگیرید',
                     'created_at'=>Carbon::now()
                 ]);
-            } else if ($id >= 2) {
-                DB::table('managers')->where('id', '1')->update(['expired' => 1]);
+            } else if ($id >= 150) {
+                DB::table('managers')->update(['expired' => 1]);
                 // TODO Send expiration email to user
 
             }
