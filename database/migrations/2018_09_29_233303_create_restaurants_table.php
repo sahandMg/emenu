@@ -28,6 +28,7 @@ class CreateRestaurantsTable extends Migration
             $table->string('printer')->nullable();
             $table->tinyInteger('payMethod')->default(1);
             $table->tinyInteger('tableCounting')->default(1);
+            $table->tinyInteger('orderCode')->default(0);
             $table->tinyInteger('complete')->default(0);
             $table->timestamps();
         });

@@ -21,7 +21,7 @@
                     </div>
                     <div class="text-center" style="width: 50%;float: left;">
                         <h2> {{$restaurant->name}} </h2>
-                    </div>   
+                    </div>
                     <div class="col-md-4 text-center" style="border: 1px solid;width: 23%;float: left;">
                         <p style="font-size: 25px;">شماره فاکتور </p>
                         <p style="font-size: 25px;">{{$order->order_number}}</p>
@@ -59,6 +59,11 @@
                 <div class="text-center">
                     <p><b>{{$restaurant->tax}}% :مالیات بر ارزش افزوده</b></p>
                     <h1>قابل پرداخت: {{$order->price * (1+$restaurant->tax/100)}} تومان</h1>
+                    <br>
+                    @if($restaurant->orderCode == 1)
+                        <h1>شناسه سفارش : {{$order->orderCode}} </h1>
+                    @endif
+
                 </div>
                 <br/>
                 <hr/>

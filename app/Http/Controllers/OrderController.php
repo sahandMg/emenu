@@ -20,11 +20,12 @@ class OrderController extends Controller
     public function orders(){
         $orders = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
             ->where('created_at','<',Carbon::today()->addHour(24)->toDateTimeString())->get();
-        return view('orders',compact('orders'));
+            $restaurant = DB::table('restaurants')->first();
+        return view('orders',compact('orders','restaurant'));
     }
     public function ytd(){
-
-        return view('ytd_orders');
+        $restaurant = DB::table('restaurants')->first();
+        return view('ytd_orders',compact('restaurant'));
     }
 
     public function getOldOrders(){
@@ -180,8 +181,9 @@ class OrderController extends Controller
                     'table_id'=> $request->table_id,
                     'info'=> $request->info,
                     'order_number' => Cache::get('order_number'),
+                    'orderCode'=> rand(1000,10000),
                     'token' => Session::token(),
-                    'created_at'=>Carbon::now()
+                    'created_at'=>Carbon::now()->toDateTimeString()
                 ]);
             }else{
                 DB::table('orders')->insert([
@@ -189,6 +191,7 @@ class OrderController extends Controller
                     'price'=> $price,
                     'table_id'=> $request->table_id,
                     'order_number' => Cache::get('order_number'),
+                    'orderCode'=> rand(1000,10000),
                     'token' => Session::token(),
                     'created_at'=>Carbon::now()->toDateTimeString()
                 ]);
@@ -340,6 +343,7 @@ class OrderController extends Controller
                 'price'=> $request->price,
                 'table_id'=> $request->table_id,
                 'info'=> $request->description,
+                'orderCode'=>rand(1000,10000),
                 'order_number' => Cache::get('order_number'),
                 'token' => Session::token(),
                 'created_at'=>Carbon::now()
@@ -350,6 +354,7 @@ class OrderController extends Controller
                 'price'=> $request->price,
                 'table_id'=> $request->table_id,
                 'order_number' => Cache::get('order_number'),
+                'orderCode'=>rand(1000,10000),
                 'token' => Session::token(),
                 'created_at'=>Carbon::now()->toDateTimeString()
             ]);

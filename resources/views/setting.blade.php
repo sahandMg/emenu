@@ -53,6 +53,15 @@
                         <span class="checkmark"></span>
                     @endif
                 </label>
+                  <label class="container-checkBox">کد شناسایی سفارش :
+                    @if($restaurant->orderCode == 1)
+                        <input name="orderCode" type="checkbox" checked="checked">
+                        <span class="checkmark"></span>
+                    @else
+                        <input name="orderCode" type="checkbox">
+                        <span class="checkmark"></span>
+                    @endif
+                </label>
                 <!-- <label class="form-check-label">
                   <input type="checkbox" class="form-check-input" value=""> پرداخت قبل از ثبت سفارش
                  </label> -->

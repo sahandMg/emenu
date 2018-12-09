@@ -112,36 +112,6 @@ class PageController extends Controller
             $printer -> close();
         }
 
-//        try {
-//            // Enter the share name for your USB printer here
-//            //$connector = "POS-58";
-//
-//            $connector = new FilePrintConnector("/dev/usb/lp0");
-//            $printer = new Printer($connector);
-//            /* Name of shop */
-////            $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
-//            $printer->setJustification(Printer::JUSTIFY_CENTER);
-//            $printer->text("POS Mart\n");
-//            $printer->selectPrintMode();
-//            $printer->text("Today Closing.\n");
-//
-//            $printer->feed();
-//            /* Title of receipt */
-//            $printer->setEmphasis(true);
-//
-//            $printer->feed(2);
-//
-//            /* Cut the receipt and open the cash drawer */
-//            $printer->cut();
-//            $printer->pulse();
-//            /* Close printer */
-//            $printer->close();
-//            // echo "Sudah di Print";
-//            return true;
-//        } catch (Exception $e) {
-//            $message = "Couldn't print to this printer: " . $e->getMessage() . "\n";
-//            return false;
-//        }
     }
 
     public function orderStatus(Request $request){

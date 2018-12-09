@@ -23,6 +23,7 @@ class CreateOrdersTable extends Migration
             $table->string('pending')->default(0);
             $table->string('paid')->default(0);
             $table->string('order_number')->default(0);
+            $table->string('orderCode')->nullable();
             $table->text('token')->nullable();
             $table->unsignedInteger('user_id')->default(0);
             $table->timestamps();

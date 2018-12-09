@@ -28,13 +28,19 @@
                   <p> مالیات بر ارزش افزوده {{ $restaurant->tax }}%</p>
                   <h5> قابل پرداخت : {{$order->price * (1+$restaurant->tax/100) }} تومان</h5>
               @else
-                  <p>هزینه پرداختی : {{$order->price}}</p>
+                  <p>قابل پرداخت : {{$order->price}}</p>
+              @endif
+              @if($restaurant->orderCode)
+              <h4>شناسه سفارش : {{$order->orderCode}}</h4>
               @endif
           </div>
 
         {{--@if($order->paid == 1 || $restaurant->payMethod == 0)--}}
             <div v-if="paid == 1 || method == 0">
-                <h2 class="text-right">سفارش شما با موفقیت ثبت شد.غذای شما به زودی آماده می شود.</h2>
+                <h2 class="text-right">سفارش شما با موفقیت ثبت شد.غذای شما به زودی آماده می شود. </h2>
+               @if($restaurant->orderCode)
+                <p>شناسه سفارش : {{$order->orderCode}}</p>
+                @endif
                 <br/>
                 <h4 class="text-center">وضعیت سفارش</h4>
                 <div class="progress">

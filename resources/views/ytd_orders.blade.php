@@ -40,6 +40,10 @@
                     <span v-if="order.price*(1+tax/100)%1000 != 0">مجموع کل + مالیات (تومان) : @{{(parseInt(order.price*(1+tax/100)/1000))+","+parseInt((order.price*(1+tax/100))%1000)}}</span>
                     <span v-if="order.price*(1+tax/100)%1000 == 0">مجموع کل + مالیات (تومان) : @{{(parseInt(order.price*(1+tax/100)/1000))+","+'000'}}</span>
                     <p>توضیحات: @{{order.info}}</p>
+                    @if($restaurant->orderCode == 1)
+                    <p>شناسه: @{{order.orderCode}}</p>
+
+                @endif
                     <div class="flex-row space-between">
 
                         <a class="btnprn" v-if="order.delivered == 1"> <button class="btn btn-primary">آماده تحویل </button></a>

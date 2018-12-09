@@ -74,6 +74,17 @@ class ManagerController extends Controller
 
             DB::table('restaurants')->update(['address' => $request->address]);
         }
+
+          if($request->has('orderCode')){
+
+           if($request->orderCode == 'on'){
+
+                DB::table('restaurants')->update(['orderCode' => '1']);
+            }
+        }else{
+            DB::table('restaurants')->update(['orderCode' => '0']);
+        }
+        
         if($request->has('payMethod')){
 
             if($request->payMethod == 'on'){
