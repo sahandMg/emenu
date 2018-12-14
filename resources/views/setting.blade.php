@@ -34,6 +34,10 @@
                     <label>شماره تلفن</label>
                     <input type="text" name="tel" class="form-control" placeholder="{{$restaurant->tel}}">
                 </div>
+                <div class="form-group">
+                    <label> مالیات بر ارزش افزوده (%)</label>
+                    <input type="text" name="tax" class="form-control" placeholder="{{$restaurant->tax}}">
+                </div>
                 <!-- <div class="form-check"> -->
                 <label class="container-checkBox">پرداخت بعد از ثبت سفارش :
                     @if($restaurant->payMethod == 1)
