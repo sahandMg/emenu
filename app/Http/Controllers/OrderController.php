@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Morilog\Jalali\Jalalian;
 
 class OrderController extends Controller
 {
@@ -396,7 +397,17 @@ class OrderController extends Controller
 
 public function cancel(){
 
-    $cancels = DB::table('cancels')->get();
+    try{
+        $cancels = DB::table('cancels')->get();
+    $dates = DB::table('cancels')->orderBy('id','dsc')->pluck('created_at');
+    for($i=0 ; $i<count($cancels);$i++){
+        $cancels[$i]->created_at = Jalalian::fromCarbon(Carbon::parse($dates[$i]))->toString();
+    }
+    }catch(\Exception $ex){
+
+        return ('سفارشی لغو نشده است. '.'<a href="orders">بازگشت</a>');
+    }
+
     $restaurant = DB::table('restaurants')->first();
     return view('cancel',compact('cancels','restaurant'));
 }
@@ -456,12 +467,17 @@ remove order from orders table
     public function getCancel(){
 
         $orders = DB::table('cancels')->get();
-        for ($i=0;$i<count($orders) ; $i++){
 
+        try{
+        $dates = DB::table('cancels')->orderBy('id','dsc')->pluck('created_at');
+        for($i=0 ; $i<count($orders);$i++){
+            $orders[$i]->created_at = Jalalian::fromCarbon(Carbon::parse($dates[$i]))->toString();
             $orders[$i]->order = unserialize($orders[$i]->order);
+        }
+        }catch(\Exception $ex){
 
-
-    }
+            return ('سفارشی لغو نشده است. '.'<a href="orders">بازگشت</a>');
+        }
     return $orders;
 
 }
