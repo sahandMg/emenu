@@ -14,8 +14,14 @@ class UserController extends Controller
 
     public function userBill(Request $request){
         $restaurant = DB::table('restaurants')->first();
+       try{
         $order = DB::table('orders')->where('token',$request->id)->orderBy('id','dsc')->first();
         $temp = unserialize($order->order);
+       }
+        catch(\Exception $ex){
+            return redirect()->route('main');
+        }
+
         $totalTime = [];
         for($i=0;$i<count($temp);$i++){
 

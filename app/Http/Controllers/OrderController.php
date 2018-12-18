@@ -394,4 +394,75 @@ class OrderController extends Controller
 
     }
 
+public function cancel(){
+
+    $cancels = DB::table('cancels')->get();
+    $restaurant = DB::table('restaurants')->first();
+    return view('cancel',compact('cancels','restaurant'));
+}
+/*
+    Gets order id from request
+find the order in orders table
+copy it to cancels table
+remove order from orders table
+*/
+    public function post_cancel(Request $request){
+
+        $order = DB::table('orders')->where('id',$request->id)->first();
+        try{
+            DB::table('cancels')->insert([
+                'order'=> $order->order,
+                'table_id' => $order->table_id,
+                'price' => $order->price,
+                'info' => $order->info,
+                'delivered' => $order->delivered,
+                'pending' => $order->pending,
+                'paid' => $order->paid,
+                'order_number' => $order->order_number,
+                'token' => $order->token,
+                'user_id' => $order->user_id,
+                'created_at' => Carbon::now()
+
+                ]);
+        }catch(\Exception $ex){
+
+            return $ex;
+        }
+
+
+        DB::table('orders')->where('id',$request->id)->delete();
+        if(!Cache::has('order_number')){
+            Cache::put('order_number',1,1440);
+        }else{
+            Cache::put('order_number',Cache::get('order_number')-1,1440);
+        }
+
+        $orders = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
+        ->where('created_at','<',Carbon::today()->addHour(24)->toDateTimeString())
+        ->orderBy('created_at','asc')->chunkById(800,function($queries){
+            foreach($queries as $keys => $query){
+                DB::table('orders')->where('id',$query->id)->update(['order_number'=>$keys + 1]);
+            }
+        });
+        $orders = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
+        ->where('created_at','<',Carbon::today()->addHour(24)->toDateTimeString())
+        ->orderBy('created_at','desc')->get();
+
+
+
+        return $this->getOrders();
+    }
+
+    public function getCancel(){
+
+        $orders = DB::table('cancels')->get();
+        for ($i=0;$i<count($orders) ; $i++){
+
+            $orders[$i]->order = unserialize($orders[$i]->order);
+
+
+    }
+    return $orders;
+
+}
 }

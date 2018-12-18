@@ -31,7 +31,7 @@ use Mike42\Escpos\CapabilityProfiles\EposTepCapabilityProfile;
 
 Route::get('fa',function (){
 
-   dd(phpinfo());
+   dd(Session::token());
 });
 
 Route::get('font',function (){
@@ -229,6 +229,10 @@ Route::get('cashier-menu',['as'=>'indexCashier','uses'=>'OrderController@indexCa
 Route::post('cashier-menu',['as'=>'indexCashier','uses'=>'OrderController@post_indexCashier']);
 Route::get('cashier-receipt','OrderController@cashierReceipt')->name('cashierReceipt');
 Route::post('cashier-receipt','OrderController@postCashierReceipt')->name('cashierReceipt');
+Route::get('cancel-order','OrderController@cancel')->name('OrderCancel');
+Route::post('cancel-order','OrderController@post_cancel')->name('OrderCancel');
+Route::get('getCancel','OrderController@getCancel')->name('getCancel');
+
 
 
 Route::get('report',['as'=>'report','uses'=>'ReportController@report']);
