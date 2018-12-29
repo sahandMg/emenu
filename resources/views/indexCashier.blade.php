@@ -21,7 +21,13 @@
             <tr>
                 <td>{{$item->name}}</td>
                 <td>{{$item->price}} تومان</td>
-                <td><input min="0" placeholder="0" type="number" class="form-control" name="{{$item->id}}"></td>
+                <td>
+                  <div class="row" id="{{$item->id}}">
+                   <button type="button" class="btn btn-danger btnNumber btnMines" style="background-color: red;">-</button>
+                    <input style="margin-left: 3%;margin-right: 3%;" min="0" placeholder="0"  class="form-control col-md-3 col-sm-3" name="{{$item->id}}" value="0">
+                   <button type="button" class="btn btn-success btnNumber btnPlus" style="border-radius: 20px;background-color: #00c500">+</button>
+                  </div>
+                </td>
             </tr>
 
         @endforeach
@@ -36,6 +42,9 @@
 </div>
 
 <style>
+   .btnMines {
+      padding-right: 14px;padding-left: 14px;
+   }
     .topnav {
         overflow: hidden;
         background-color: #333;
@@ -66,4 +75,45 @@
         display: none;
     }
 </style>
+<script type="text/javascript">
+(function($) {
+    $.fn.invisible = function() {
+        return this.each(function() {
+            $(this).css("visibility", "hidden");
+        });
+    };
+    $.fn.visible = function() {
+        return this.each(function() {
+            $(this).css("visibility", "visible");
+        });
+    };
+}(jQuery));
+// $('.btnMines').hide();
+$('.btnMines').invisible();
+  $(document).on('click', '.btnMines', function () {
+    console.log("btnMines");
+    var parentDivId = $(this).parent().attr('id');
+    console.log(parentDivId);
+    var num = $('#'+parentDivId+' input').val();
+    if (parseInt(num) >0 ) {
+      num = parseInt(num) - 1 ;
+      $('#'+parentDivId+' input').val(num);
+    }
+
+    if (parseInt(num) == 0 ) {
+      $('#'+parentDivId+' .btnMines').invisible();
+    }
+    console.log(num);
+  });
+  $(document).on('click', '.btnPlus', function () {
+    console.log("btnPlus");
+    var parentDivId = $(this).parent().attr('id');
+    console.log(parentDivId);
+    var num = $('#'+parentDivId+' input').val();
+      num = parseInt(num) + 1 ;
+      $('#'+parentDivId+' input').val(num);
+      $('#'+parentDivId+' .btnMines').visible();
+      console.log(num);
+  });
+</script>
 @endsection

@@ -68,7 +68,7 @@ class Timing
 
                 DB::table('categories')->where('id', $foodId[$i])->update(['time' => 5]);
             }else{
-                DB::table('categories')->where('id', $foodId[$i])->update(['time' => round($modified[$i] + $category_time)]);
+                DB::table('categories')->where('id', $foodId[$i])->update(['time' => round($modified[$i] + $category_time) + 1]);
             }
         }
 

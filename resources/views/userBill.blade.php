@@ -23,7 +23,7 @@
 
           <div v-if="method == 1 && paid == 0">
             <p>برای تکمیل سفارش به صندوق مراجعه کنید</p>
-            <p>شماره سفارش شما : {{$order->order_number}}</p>
+            <p>شماره سفارش شما : <span id="orderNumberField">@{{order_number}}</span></p>
               @if(!is_null($restaurant->tax))
                   <p> مالیات بر ارزش افزوده {{ $restaurant->tax }}%</p>
                   <h5> قابل پرداخت : {{$order->price * (1+$restaurant->tax/100) }} تومان</h5>
@@ -66,7 +66,7 @@
                     </div>
                     <div class="text-center" style="border: 1px solid;">
                         <p>شماره فاکتور: </p>
-                        <p>{{$order->order_number}}</p>
+                        <p>@{{order_number}}</p>
                     </div>
                 </div>
                 <hr/>
@@ -187,7 +187,8 @@ PlaySound("sound1");
             progressBar: 0,
             pgClass: 'bg-info',
             remaining : 0,
-            estimateShow:true
+            estimateShow:true,
+            order_number:0
         },
         created: function () {
 
@@ -218,6 +219,10 @@ PlaySound("sound1");
                     vm.method = response.data[1];
                     vm.delivered = response.data[2];
                     vm.pending = response.data[3];
+                    vm.order_number = response.data[4];
+                    if(document.getElementById('orderNumberField') !== null){
+                        document.getElementById('orderNumberField').innerHTML = vm.order_number
+                    }
                     if (vm.pending == 0 && vm.delivered == 0 ) {
                         vm.progressBar = 50
                     }

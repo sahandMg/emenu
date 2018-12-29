@@ -240,11 +240,12 @@ class OrderController extends Controller
 
     public function paidStat(Request $request){
 
-         $paid = DB::table('orders')->where('id',$request->id)->first()->paid;
+         $paidANDorderNumber = DB::table('orders')->where('id',$request->id)->select('paid','order_number')->get()->toArray();
+          
          $method = DB::table('restaurants')->first()->payMethod;
         $delivered =  DB::table('orders')->where('id',$request->id)->first()->delivered;
         $pending =  DB::table('orders')->where('id',$request->id)->first()->pending;
-        return [$paid,$method,$delivered,$pending];
+        return [$paidANDorderNumber[0]->paid,$method,$delivered,$pending,$paidANDorderNumber[0]->order_number];
 
 
     }
@@ -395,7 +396,7 @@ class OrderController extends Controller
 
     }
 
-public function cancel(){
+public function cancel(Request $request){
 
     try{
         $cancels = DB::table('cancels')->get();
@@ -418,7 +419,7 @@ copy it to cancels table
 remove order from orders table
 */
     public function post_cancel(Request $request){
-
+        
         $order = DB::table('orders')->where('id',$request->id)->first();
         try{
             DB::table('cancels')->insert([
@@ -430,6 +431,7 @@ remove order from orders table
                 'pending' => $order->pending,
                 'paid' => $order->paid,
                 'order_number' => $order->order_number,
+                'orderCode' => $order->orderCode,
                 'token' => $order->token,
                 'user_id' => $order->user_id,
                 'created_at' => Carbon::now()
@@ -450,7 +452,7 @@ remove order from orders table
 
         $orders = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
         ->where('created_at','<',Carbon::today()->addHour(24)->toDateTimeString())
-        ->orderBy('created_at','asc')->chunkById(800,function($queries){
+        ->orderBy('id','asc')->chunkById(1200,function($queries){
             foreach($queries as $keys => $query){
                 DB::table('orders')->where('id',$query->id)->update(['order_number'=>$keys + 1]);
             }
@@ -459,14 +461,19 @@ remove order from orders table
         ->where('created_at','<',Carbon::today()->addHour(24)->toDateTimeString())
         ->orderBy('created_at','desc')->get();
 
+        if($request->has('old')){
 
+            return $this->getOldOrders();
+        }else{
 
-        return $this->getOrders();
+            return $this->getOrders();
+        }
+
     }
 
     public function getCancel(){
 
-        $orders = DB::table('cancels')->get();
+        $orders = DB::table('cancels')->orderBy('id','desc')->get();
 
         try{
         $dates = DB::table('cancels')->orderBy('id','dsc')->pluck('created_at');

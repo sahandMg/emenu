@@ -5,8 +5,9 @@
     <div class="container" style="margin-top: 2%;" id="order">
         <div class="flex-row space-around">
             <div class="flex-row flex-start">
-               <a href="{{route('orders')}}" class="btn btn-danger" style="margin-left: 1%;margin-right: 1%;border: 2px solid black">سفارش ها کنسل شده</a>
-                <a href="{{route('orders')}}" class="btn btn-success" style="margin-left: 1%;margin-right: 1%;">سفارشات</a>
+               <a href="{{route('orders')}}" class="btn btn-danger" style="margin-left: 1%;margin-right: 1%;border: 2px solid black">سفارشات لغو شده</a>
+                <a href="{{route('ytd')}}" class="btn btn-warning" style="margin-left: 1%;margin-right: 1%"> سفارشات دیروز</a>
+                <a href="{{route('orders')}}" class="btn btn-success" style="margin-left: 1%;margin-right: 1%;"> سفارشات امروز</a>
             </div>
             {{--<button @click="reset" :disabled="disbtn" href="{{route('reset')}}" class="btn btn-danger">@{{ orderCounter }}</button>--}}
         </div>

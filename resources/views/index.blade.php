@@ -368,7 +368,8 @@
 	}
 
 	function sendOrder() {
-
+        document.getElementById('btn').hidden = true;
+        document.getElementById('btn2').hidden = false;
 		var info = document.getElementById('info').value;
 		if(hasTable == 0){
 			var table_id = null;
@@ -377,8 +378,7 @@
 		}
 
 		axios.post('{{route('sendOrder')}}',{'order':order,'table_id':table_id,'total_price':allPrice,'info':info}).then(function (response) {
-			document.getElementById('btn').hidden = true;
-			document.getElementById('btn2').hidden = false;
+
 			window.location = {!! json_encode(route('userBill',['id'=>Session::token()])) !!};
 		})
 

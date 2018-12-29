@@ -5,11 +5,15 @@
     <div class="container" style="margin-top: 2%;" id="order">
         <div class="flex-row space-around">
             <div class="flex-row flex-start">
-                <a href="{{route('ytd')}}" class="btn btn-warning" style="margin-left: 1%;margin-right: 1%;border: 2px solid black">دیروز</a>
-                <a href="{{route('orders')}}" class="btn btn-success" style="margin-left: 1%;margin-right: 1%">امروز</a>
+                <a href="{{route('OrderCancel')}}" class="btn btn-danger" style="margin-left: 1%;margin-right: 1%;">سفارشات لغو شده</a>
+                <a href="{{route('ytd')}}" class="btn btn-warning" style="margin-left: 1%;margin-right: 1%;border: 2px solid black">سفارشات دیروز</a>
+                <a href="{{route('orders')}}" class="btn btn-success" style="margin-left: 1%;margin-right: 1%"> سفارشات امروز</a>
+
             </div>
             {{--<button @click="reset" :disabled="disbtn" href="{{route('reset')}}" class="btn btn-danger">@{{ orderCounter }}</button>--}}
         </div>
+
+
 
 
         <div  class="row" style="margin-top: 2%;margin-bottom: 2%;">
@@ -43,21 +47,26 @@
                     @if($restaurant->orderCode == 1)
                     <p>شناسه: @{{order.orderCode}}</p>
 
-                @endif
-                    <div class="flex-row space-between">
+                    @endif
+
+                    <div class="flex-row space-between" style="align-items: stretch;margin-bottom: 2%;">
+                      <div style="flex-grow: 5;">
+                        {{--<a class="btnprn" v-show="order.delivered == 1 & order.pending == 0"><button id="print@{{ order.id }}" @mouseover='txt(order.id)'  @mouseout='delTxt(order.id)' class="btn btn-primary">آماده تحویل </button></a>--}}
 
                         <a class="btnprn" v-if="order.delivered == 1"> <button class="btn btn-primary">آماده تحویل </button></a>
 
                         <button v-if="order.delivered == 0 && order.pending == 1" id="proc@{{order.id}}" @click="cooking(order.id)"   class="btn btn-info">درحال پخت</button>
 
                         <button v-if="order.delivered == 0 && order.pending == 0" id="proc2@{{order.id}}" @click="sendForCook(order.id)"  class="btn btn-danger">ارسال جهت پخت</button>
-
-                        <button  id="print@{{ order.id }}"   style="cursor: pointer;" @click="printBill(order.id)"><i class="fa fa-print" aria-hidden="true"></i></button>
-                        <button v-if="order.paid == 1" class="btn btn-success">پرداخت شد </button>
-                        <button v-else id="payment@{{order.id}}" @click="paid(order.id)" class="btn btn-warning">در انتظار پرداخت کاربر</button>
-
-
+                      </div>
+                      <div  class="flex-row" style="align-content: flex-end;flex-grow: 1;direction: ltr;">
+                        <button style="margin-right: 4%;"  id="print@{{ order.id }}"   style="cursor: pointer;" @click="printBill(order.id)"><i class="fa fa-print" aria-hidden="true"></i></button>
+                        <button style="margin-right: 4%;"  id="cancel@{{ order.id }}"   style="cursor: pointer;" @click="cancel(order.id)"><i class="fa fa-ban" aria-hidden="true"></i></button>
+                      </div>
                     </div>
+                    <!-- <br/> -->
+                    <button v-if="order.paid == 1" class="btn btn-success">پرداخت شد </button>
+                    <button class="btn btn-warning"  v-else id="payment@{{order.id}}" @click="paid(order.id)">در انتظار پرداخت کاربر</button>
                 </div>
             </div>
         </div>
@@ -297,7 +306,13 @@
 
             },
             methods:{
-
+                cancel:function(id){
+                   vm = this;
+                    axios.post('{{route('OrderCancel')}}',{'id':id,'old':'old'}).then(function (response) {
+//                         console.log(response.data)
+                        vm.orders = response.data;
+                    })
+                },
                 printBill:function(id){
                     axios.get('{{route('bill')}}'+'?id='+id).then(function (response) {
 

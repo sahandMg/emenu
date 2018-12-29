@@ -33,7 +33,7 @@
 <script>
 
     Vue.component('line-chart', {
-        extends: VueChartJs.Bar,
+        extends: VueChartJs.Line,
         mounted:function () {
             this.renderChart({
                 labels: {!! json_encode(Cache::get('chartTime')) !!},

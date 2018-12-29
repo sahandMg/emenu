@@ -23,7 +23,7 @@
                     <input type="file" name="logo" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label>عکس بنر منو</label>
+                    <label>عکس پس زمینه </label>
                     <input type="file" name="image" class="form-control">
                 </div>
                 <div class="form-group">

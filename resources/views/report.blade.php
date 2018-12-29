@@ -77,20 +77,22 @@
     </thead>
     <tbody>
     <input type="hidden" value="{{$sum=0}}">
-    @foreach($arr as $key=>$value)
-      <tr>
-        <td>{{$key}}</td>
-        <td>{{$value}}</td>
-        <td>{{\App\Food::where('name',$key)->first()['price']}}</td>
-        <td id="price">
+    @if(isset($arr))
+        @foreach($arr as $key=>$value)
+        <tr>
+            <td>{{$key}}</td>
+            <td>{{$value}}</td>
+            <td>{{\App\Food::where('name',$key)->first()['price']}}</td>
+            <td id="price">
 
-            {{\App\Food::where('name',$key)->first()['price']* $value}}
+                {{\App\Food::where('name',$key)->first()['price']* $value}}
 
-        </td>
-          <input type="hidden" value="{{$sum = $sum + \App\Food::where('name',$key)->first()['price']* $value}}">
-      </tr>
-      <tr>
-    @endforeach
+            </td>
+            <input type="hidden" value="{{$sum = $sum + \App\Food::where('name',$key)->first()['price']* $value}}">
+        </tr>
+        <tr>
+        @endforeach
+    @endif
       <tr>
         <td></td>
         <td></td>

@@ -20,15 +20,21 @@ class ReportController extends Controller
         $restaurant = DB::table('restaurants')->first();
         $arr = [];
         if(!Cache::has('order')){
-            $orders = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
-                ->where('created_at','<',Carbon::today()->addHour(24)->toDateTimeString())->pluck('order');
+            // $orders = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
+            //     ->where('created_at','<',Carbon::today()->addHour(24)->toDateTimeString())->pluck('order');
+            $orders = DB::table('orders')->pluck('order');
         }
         else{
             $orders = Cache::get('order');
         }
 
         if(sizeof($orders) == 0){
-
+            $lastYear = Carbon::parse(DB::table('orders')->orderBy('id','dsc')->first()->created_at);
+            $lastYear = Jalalian::fromCarbon($lastYear)->getYear();
+            $firstYear = Carbon::parse(DB::table('orders')->orderBy('id','asc')->first()->created_at);
+            $firstYear = Jalalian::fromCarbon($firstYear)->getYear();
+            Cache::put('foodList',$arr,20);
+            return view('report',compact('arr','firstYear','lastYear','restaurant'));
             return '<h1 style="text-align: center">'.'گزارشی برای امروز ثبت نشده است'.'</h1>'.'<a href="settings" >'.'بازگشت'.'</a>';
         }
 
