@@ -11,6 +11,7 @@
 <body>
   <div class="container text-center" style="margin-top: 5%;">
     <h3 style="direction: rtl;text-align: center;">لطفا برای وارد کردن کلمه عبور، زبان صفحه کلید خود را به زبان انگلیسی تغییر دهید.</h3>
+    <h4 style="direction: rtl;text-align: center;">تلفن پشتیبانی : 09104963734</h4>
   </div>
   <div class="login-page">
       @if($errors->all())
@@ -47,7 +48,7 @@
 
 .login-page {
   width: 360px;
-  padding: 8% 0 0;
+  padding: 4% 0 0;
   margin: auto;
 }
 .form {

@@ -203,7 +203,8 @@ Route::get('tax','PageController@Tax')->name('getTax');
 Route::get('user-bill',['as'=>'userBill','uses'=>'UserController@userBill']);
 
 
-
+Route::get('generate','AuthController@codeGenerator');
+Route::get('check-me/{code}','AuthController@checkMe');
 Route::get('activation',['as'=>'activation','uses'=>'AuthController@activation']);
 Route::post('activation',['as'=>'activation','uses'=>'AuthController@post_activation']);
 Route::get('reset-activation',['as'=>'activationReset','uses'=>'AuthController@activationReset']);

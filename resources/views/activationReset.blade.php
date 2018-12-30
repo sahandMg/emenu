@@ -29,9 +29,10 @@
             <input type="hidden" name="_token" value="{{csrf_token()}}">
 
             <div class="form-group">
-                <label for="exampleInputPassword1">کد فعالسازی ۱۰ رقمی</label>
-                <input name="activeCode" type="text" class="form-control" id="exampleInputPassword1" placeholder="کد فعالسازی برنامه">
-            </div>
+                    <label>فعالسازی</label><br/>
+                    <label for="exampleInputPassword1"><b>کد: {{$key}}</b></label>
+                    <input name="code" type="text" class="form-control" id="exampleInputPassword1" placeholder="کد فعالسازی برنامه">
+                </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">شماره همراه</label>
                 <input name="tel" type="text" class="form-control" value="{{Request::old('tel')}}" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="شماره همراه ">

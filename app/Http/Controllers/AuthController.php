@@ -54,8 +54,32 @@ class AuthController extends Controller
             Cache::forever('warn2',0);
             Cache::forever('warn3',0);
             Cache::forever('warn4',0);
+            $resp = $this->codeGenerator();
+            $randomNumber = $resp[0];
+            if(!Cache::has('randomNumber')){
+                $trial = $resp[1];
+                $orginal = $resp[2];
+                Cache::forever('randomNumber',$randomNumber);
+                Cache::forever('trial',$trial);
+                Cache::forever('original',$orginal);
 
-        return view('activation');
+            DB::table('activations')->insert([
+                'code' => Cache::get('trial'),
+                'trial' => 1,
+                'original'=> 0,
+                'expired' => 0,
+                'created_at'=>Carbon::now()
+            ]);
+            DB::table('activations')->insert([
+                'code' => Cache::get('original'),
+                'trial' => 0,
+                'original'=> 1,
+                'expired' => 0,
+                'created_at'=>Carbon::now()
+            ]);
+            }
+            $key = Cache::get('randomNumber');
+        return view('activation',compact('key'));
     }
     public function post_activation(Request $request){
 
@@ -80,8 +104,48 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
+    public function codeGenerator() {
+        $randomNumber = str_random(5);
+        $cipher = "aes-128-gcm";
+        $key1 = "sahand";
+        $key2 = "mohammad";
+       if (in_array($cipher, openssl_get_cipher_methods()))
+        {
+         $ivlen = openssl_cipher_iv_length($cipher);
+         $ciphertext = openssl_encrypt($randomNumber, $cipher, $key1, $options=0, $key1, $tag);
+         $ciphertext2 = openssl_encrypt($randomNumber, $cipher, $key2, $options=0, $key2, $tag);
+         return [$randomNumber,$ciphertext,$ciphertext2];
+
+       }
+      }
+
+      public function checkMe($code=null){
+
+        if(is_null($code)){
+            return 'null code';
+        }else{
+
+
+            $randomNumber = $code;
+            $cipher = "aes-128-gcm";
+            $key1 = "sahand";
+            $key2 = "mohammad";
+           if (in_array($cipher, openssl_get_cipher_methods()))
+            {
+             $ivlen = openssl_cipher_iv_length($cipher);
+             $ciphertext = openssl_encrypt($randomNumber, $cipher, $key1, $options=0, $key1, $tag);
+             $ciphertext2 = openssl_encrypt($randomNumber, $cipher, $key2, $options=0, $key2, $tag);
+             return [$randomNumber,$ciphertext,$ciphertext2];
+
+           }
+
+        }
+
+      }
+
     public function activationReset(){
-        return view('activationReset');
+        $key = Cache::get('randomNumber');
+        return view('activationReset',compact('key'));
     }
     public function post_activationReset (Request $request){
         // TODO Hashing activations code
@@ -89,7 +153,8 @@ class AuthController extends Controller
         if(is_null($query)){
             return redirect()->back()->with(['message'=>'شماره همراه در سیستم ثبت نشده است']);
         }
-        $query = DB::table('activations')->where('code',$request->activeCode)->first();
+        $query = DB::table('activations')->where('code',$request->code)->first();
+        
         if(is_null($query) || $query->expired == 1){
             return redirect()->back()->with(['message'=>'کد فعالسازی معتبر نیست']);
         }

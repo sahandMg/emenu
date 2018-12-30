@@ -241,7 +241,7 @@ class OrderController extends Controller
     public function paidStat(Request $request){
 
          $paidANDorderNumber = DB::table('orders')->where('id',$request->id)->select('paid','order_number')->get()->toArray();
-          
+
          $method = DB::table('restaurants')->first()->payMethod;
         $delivered =  DB::table('orders')->where('id',$request->id)->first()->delivered;
         $pending =  DB::table('orders')->where('id',$request->id)->first()->pending;
@@ -256,13 +256,14 @@ class OrderController extends Controller
 
     public function indexCashier (){
 
-        $types = DB::table('categories')->orderBy('priority','asc')->get()->pluck('type');
+        $types = DB::table('categories')->orderBy('priority','asc')->get()->pluck('type')->toArray();
         $foods = [];
         for($i=0;$i<count($types);$i++){
 
-            $foods[$i] = DB::table('foods')->where([['category',$types[$i]],['valid','1']])->get();
+            $foods[$i] = DB::table('foods')->where([['category',$types[$i]],['valid','1']])->get()->toArray();
 
         }
+        // dd($foods);
         $order = DB::table('orders')->where('token',Session::token())->orderBy('id','dsc')->first();
         $info = DB::table('restaurants')->first();
 
@@ -419,7 +420,7 @@ copy it to cancels table
 remove order from orders table
 */
     public function post_cancel(Request $request){
-        
+
         $order = DB::table('orders')->where('id',$request->id)->first();
         try{
             DB::table('cancels')->insert([

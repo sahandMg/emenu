@@ -11,6 +11,7 @@
 <body>
 <div class="container text-center" style="margin-top: 5%;">
     <h3 style="direction: rtl;text-align: center;">لطفا برای وارد کردن کلمه عبور، زبان صفحه کلید خود را به زبان انگلیسی تغییر دهید.</h3>
+    <h4 style="direction: rtl;text-align: center;">تلفن پشتیبانی : 09104963734</h4>
   </div>
 <div class="login-page">
     {{--@if($errors->all())--}}
@@ -43,7 +44,8 @@
                 {{--</div>--}}
 
                 <div class="form-group">
-                    <label for="exampleInputPassword1">کد فعالسازی ۱۰ رقمی</label>
+                    <label>فعالسازی</label><br/>
+                    <label for="exampleInputPassword1"><b>کد: {{$key}}</b></label>
                     <input name="code" type="text" class="form-control" id="exampleInputPassword1" placeholder="کد فعالسازی برنامه">
                 </div>
                 <div class="form-group">
@@ -60,7 +62,7 @@
 
     .login-page {
         width: 360px;
-        padding: 8% 0 0;
+        padding: 4% 0 0;
         margin: auto;
     }
     .form {
@@ -113,7 +115,7 @@
     .form .register-form {
         display: none;
     }
-   
+
     body {
         background: #76b852; /* fallback for old browsers */
         background: -webkit-linear-gradient(right, #76b852, #8DC26F);
