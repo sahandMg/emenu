@@ -127,6 +127,26 @@
            <button type="submit" class="btn btn-primary col-md-3 col-sm-2">ذخیره نام پرینتر</button>
            <button @click="print"  type="button" class="btn btn-success col-md-3 col-sm-2">تست پرینتر</button>
       </form>
+      <br/>
+  <hr/>
+  <br/>
+  <h2 class="text-center">تغییر رمز عبور</h2>
+      <form action="{{route('settings')}}" method="post" enctype="multipart/form-data" style="margin-bottom: 2%;">
+          <input type="hidden" name="_token" value="{{csrf_token()}}">
+          <div class="form-group">
+               <label>رمز قبلی</label>
+               <input required type="password" name="password"  class="form-control" placeholder="رمز قبلی">
+           </div>
+           <div class="form-group">
+               <label>رمز جدید</label>
+               <input required type="password" name="newpassword"  class="form-control" placeholder="زمر جدید">
+           </div>
+           <div class="form-group">
+               <label>تکرار رمز جدید</label>
+               <input required type="password" name="newpassword2"  class="form-control" placeholder="تکرار رمز جدید">
+           </div>
+           <button type="submit" class="btn btn-primary col-md-3 col-sm-2">تغییر</button>
+      </form>
  </div>
 
     <script>
