@@ -134,16 +134,16 @@
       <form action="{{route('settings')}}" method="post" enctype="multipart/form-data" style="margin-bottom: 2%;">
           <input type="hidden" name="_token" value="{{csrf_token()}}">
           <div class="form-group">
-               <label>رمز قبلی</label>
-               <input required type="password" name="password"  class="form-control" placeholder="رمز قبلی">
+               <label>رمز فعلی</label>
+               <input required type="password" name="oldPassword"  class="form-control" placeholder="کلمه عبور فعلی">
            </div>
            <div class="form-group">
                <label>رمز جدید</label>
-               <input required type="password" name="newpassword"  class="form-control" placeholder="زمر جدید">
+               <input required type="password" name="newPassword"  class="form-control" placeholder="کلمه عبور جدید">
            </div>
            <div class="form-group">
                <label>تکرار رمز جدید</label>
-               <input required type="password" name="newpassword2"  class="form-control" placeholder="تکرار رمز جدید">
+               <input required type="password" name="confirm"  class="form-control" placeholder="تایید کلمه عبور جدید">
            </div>
            <button type="submit" class="btn btn-primary col-md-3 col-sm-2">تغییر</button>
       </form>

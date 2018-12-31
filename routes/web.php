@@ -26,12 +26,13 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use App\Repo\item;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintBuffers\ImagePrintBuffer;
+use Illuminate\Support\Facades\Hash;
 use Mike42\Escpos\CapabilityProfiles\EposTepCapabilityProfile;
 
 
 Route::get('fa',function (){
 
-   dd(Session::token());
+   return Hash::make('reset_password');
 });
 
 Route::get('font',function (){

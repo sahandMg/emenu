@@ -84,7 +84,7 @@ class ManagerController extends Controller
         }else{
             DB::table('restaurants')->update(['orderCode' => '0']);
         }
-        
+
         if($request->has('payMethod')){
 
             if($request->payMethod == 'on'){
@@ -125,6 +125,22 @@ class ManagerController extends Controller
             Session::put('cashiers' ,DB::table('cashiers')->get());
             return redirect()->back()->with(['message'=>'تغییرات ذخیره شد',]);
         }
+
+        if(!is_null($request->oldPassword) && !is_null($request->newPassword) && !is_null($request->confirm)){
+
+            $manager = DB::table('managers')->first();
+            if(!Hash::check($request->oldPassword,$manager->password)){
+                return redirect()->back()->with(['error'=>'کلمه عبور فعلی نادرست است']);
+            }
+            if($request->newPassword != $request->confirm){
+                return redirect()->back()->with(['error'=>'تایید کلمه عبور نادرست است']);
+            }
+            $manager = DB::table('managers')->update(['password'=>Hash::make($request->newPassword)]);
+
+            return redirect()->back()->with(['message'=>'کلمه عبور تغییر یافت']);
+        }
+
+
         DB::table('restaurants')->update(['complete' => 1]);
 
         return redirect()->back()->with(['message'=>'تغییرات ذخیره شد']);

@@ -32,11 +32,11 @@
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="form-group">
                     <label for="exampleInputEmail1">نام کاربری</label>
-                    <input name="username" type="text" class="form-control" value="{{Request::old('username')}}" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="نام کاربری">
+                    <input name="username" type="text" class="form-control" style="text-align:center" value="{{Request::old('username')}}" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="نام کاربری">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">شماره همراه</label>
-                    <input name="tel" type="text" class="form-control" value="{{Request::old('tel')}}" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="شماره همراه ">
+                    <input name="tel" type="text" class="form-control" style="text-align:center" value="{{Request::old('tel')}}" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="شماره همراه ">
                 </div>
                 {{--<div class="form-group">--}}
                     {{--<label for="exampleInputEmail1">ایمیل</label>--}}
@@ -46,11 +46,11 @@
                 <div class="form-group">
                     <label>فعالسازی</label><br/>
                     <label for="exampleInputPassword1"><b>کد: {{$key}}</b></label>
-                    <input name="code" type="text" class="form-control" id="exampleInputPassword1" placeholder="کد فعالسازی برنامه">
+                    <input name="code" type="text" class="form-control" style="text-align:center" id="exampleInputPassword1" placeholder="کد فعالسازی برنامه">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">کلمه عبور</label>
-                    <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="کلمه عبور ورود به برنامه ">
+                    <input name="password" type="password" style="text-align:center" class="form-control" id="exampleInputPassword1" placeholder="کلمه عبور ورود به برنامه ">
                 </div>
                 <button type="submit" class="btn btn-primary">ثبت  </button>
             </form>
