@@ -263,7 +263,7 @@ class OrderController extends Controller
             $foods[$i] = DB::table('foods')->where([['category',$types[$i]],['valid','1']])->get()->toArray();
 
         }
-        // dd($foods);
+    
         $order = DB::table('orders')->where('token',Session::token())->orderBy('id','dsc')->first();
         $info = DB::table('restaurants')->first();
 

@@ -135,7 +135,7 @@ class AuthController extends Controller
              $ivlen = openssl_cipher_iv_length($cipher);
              $ciphertext = openssl_encrypt($randomNumber, $cipher, $key1, $options=0, $key1, $tag);
              $ciphertext2 = openssl_encrypt($randomNumber, $cipher, $key2, $options=0, $key2, $tag);
-             return [$randomNumber,$ciphertext,$ciphertext2];
+             return ['key'=>$randomNumber,'trial'=>$ciphertext,'original'=>$ciphertext2];
 
            }
 
@@ -154,7 +154,7 @@ class AuthController extends Controller
             return redirect()->back()->with(['message'=>'شماره همراه در سیستم ثبت نشده است']);
         }
         $query = DB::table('activations')->where('code',$request->code)->first();
-        
+
         if(is_null($query) || $query->expired == 1){
             return redirect()->back()->with(['message'=>'کد فعالسازی معتبر نیست']);
         }

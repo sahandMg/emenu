@@ -28,14 +28,16 @@ class ReportController extends Controller
             $orders = Cache::get('order');
         }
 
-        if(sizeof($orders) == 0){
+        if(sizeof($orders) != 0){
             $lastYear = Carbon::parse(DB::table('orders')->orderBy('id','dsc')->first()->created_at);
             $lastYear = Jalalian::fromCarbon($lastYear)->getYear();
             $firstYear = Carbon::parse(DB::table('orders')->orderBy('id','asc')->first()->created_at);
             $firstYear = Jalalian::fromCarbon($firstYear)->getYear();
             Cache::put('foodList',$arr,20);
-            return view('report',compact('arr','firstYear','lastYear','restaurant'));
-            return '<h1 style="text-align: center">'.'گزارشی برای امروز ثبت نشده است'.'</h1>'.'<a href="settings" >'.'بازگشت'.'</a>';
+            // return view('report',compact('orders','firstYear','lastYear','restaurant'));
+
+        }else{
+            return '<h1 style="text-align: center">'.'گزارشی ثبت نشده است'.'</h1>'.'<a href="orders"><button>'.'بازگشت'.'</button></a>';
         }
 
 

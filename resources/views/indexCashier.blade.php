@@ -179,77 +179,13 @@ $('.btnMines').invisible();
       </div>
     </li>
     @endfor
-    {{--  <li>
-      <div class="content__wrapper2">
-        <table class="table table-striped">
-        <thead>
-         <tr>
-          <th>نام غذا</th>
-          <th>قیمت</th>
-          <th>تعداد</th>
-         </tr>
-       </thead>
-        <tbody>
-         @for($i=0;$i<count($foods);$i++)
-          @foreach($foods[$i] as $item)
-            <tr>
-                <td>{{$item->name}}</td>
-                <td>{{$item->price}} تومان</td>
-                <td>
-                  <div class="row" id="{{$item->id}}">
-                   <button type="button" class="btn btn-danger btnNumber btnMines" style="background-color: red;">-</button>
-                    <input style="margin-left: 3%;margin-right: 3%;" min="0" placeholder="0"  class="form-control col-md-3 col-sm-3" name="{{$item->id}}" value="0">
-                   <button type="button" class="btn btn-success btnNumber btnPlus" style="border-radius: 20px;background-color: #00c500">+</button>
-                  </div>
-                </td>
-            </tr>
-
-           @endforeach
-         @endfor
-        </tbody>
-       </table>
-      </div>
-    </li>
-    <li>
-      <div class="content__wrapper2">
-        <table class="table table-striped">
-        <thead>
-         <tr>
-          <th>نام غذا</th>
-          <th>قیمت</th>
-          <th>تعداد</th>
-         </tr>
-       </thead>
-       <tbody>
-        @for($i=0;$i<count($foods);$i++)
-         @foreach($foods[$i] as $item)
-            <tr>
-                <td>{{$item->name}}</td>
-                <td>{{$item->price}} تومان</td>
-                <td>
-                  <div class="row" id="{{$item->id}}">
-                   <button type="button" class="btn btn-danger btnNumber btnMines" style="background-color: red;">-</button>
-                    <input style="margin-left: 3%;margin-right: 3%;" min="0" placeholder="0"  class="form-control col-md-3 col-sm-3" name="{{$item->id}}" value="0">
-                   <button type="button" class="btn btn-success btnNumber btnPlus" style="border-radius: 20px;background-color: #00c500">+</button>
-                  </div>
-                </td>
-            </tr>
-
-         @endforeach
-      @endfor
-      </tbody>
-     </table>
-      </div>
-    </li>
-    <li>
-      <h2>test</h2>
-    </li>  --}}
   </ul>
 </section>
-
+@if(sizeof($foods) > 0)
    <br/>
       <button class="btn btn-success" type="submit" style="margin: auto;display: block;">ثبت سفارش</button>
    <br/>
+   @endif
   </form>
 </div>
 
