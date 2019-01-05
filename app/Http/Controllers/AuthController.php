@@ -69,7 +69,7 @@ class AuthController extends Controller
             Cache::forever('warn4',0);
             $resp = $this->codeGenerator();
             $randomNumber = $resp[0];
-            if(!Cache::has('randomNumber')){
+            // if(!Cache::has('randomNumber')){
                 $trial = $resp[1];
                 $orginal = $resp[2];
                 Cache::forever('randomNumber',$randomNumber);
@@ -90,7 +90,7 @@ class AuthController extends Controller
                 'expired' => 0,
                 'created_at'=>Carbon::now()
             ]);
-            }
+            // }
             $key = Cache::get('randomNumber');
         return view('activation',compact('key'));
     }

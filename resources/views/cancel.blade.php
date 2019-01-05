@@ -57,7 +57,8 @@
                         <button v-if="order.delivered == 0 && order.pending == 0" id="proc2@{{order.id}}" @click="sendForCook(order.id)"  class="btn btn-danger">ارسال جهت پخت</button>
                       </div>
                       <div  class="flex-row" style="align-content: flex-end;flex-grow: 1;direction: ltr;">  --}}
-                        <button style="margin-right: 4%;"  id="print@{{ order.id }}"   style="cursor: pointer;" @click="printBill(order.id)"><i class="fa fa-print" aria-hidden="true"></i></button>
+
+                        <button style="margin-right: 4%;"  id="print@{{ order.id }}"   style="cursor: pointer;" @click="printBill(order.id)"><img height="20" width="20" src="{{(('images/icons/printer.png'))}}"></button>
                         {{--  <button style="margin-right: 4%;"  id="print@{{ order.id }}"   style="cursor: pointer;" @click="printBill(order.id)"><i class="fa fa-ban" aria-hidden="true"></i></button>  --}}
                       </div>
                     </div>
