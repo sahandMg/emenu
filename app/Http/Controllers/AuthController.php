@@ -19,7 +19,7 @@ class AuthController extends Controller
 
     public function post_login(Request $request){
 
-        if(Auth::guard('manager')->attempt(['username'=>$request->username,'password'=>$request->password])){
+        if(Auth::guard('manager')->attempt(['username'=>strtolower($request->username),'password'=>$request->password])){
 
             if(DB::table('restaurants')->first()->complete == 1){
 
@@ -105,7 +105,7 @@ class AuthController extends Controller
         }
         DB::table('activations')->where('code',$request->code)->update(['expired'=>1]);
         DB::table('managers')->insert([
-            'username'=>$request->username,
+            'username'=>strtolower($request->username),
 //            'email'=>$request->email,
             'tel'=>$request->tel,
             'password'=>Hash::make($request->password),
