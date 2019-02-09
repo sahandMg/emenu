@@ -2,7 +2,7 @@
 @section('content')
 
     <div id="load_screen"><div id="loading">در حال لود</div></div>
-    <div class="container" style="margin-top: 2%;" id="order">
+    <div class="container" style="margin-top: 2%;max-width: 1500px;width: 95%;" id="order">
         <div class="flex-row space-around">
             <div class="flex-row flex-start">
                <a href="{{route('OrderCancel')}}" class="btn btn-danger" style="margin-left: 1%;margin-right: 1%;">سفارشات لغو شده</a>
@@ -11,14 +11,77 @@
             </div>
             {{--<button @click="reset" :disabled="disbtn" href="{{route('reset')}}" class="btn btn-danger">@{{ orderCounter }}</button>--}}
         </div>
-
-
+        <br/>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>شماره سفارش</th>
+        <th>شماره میز</th>
+        <th>شرح سفارش</th>
+        <th>زمان</th>
+        <th>مجموع کل + مالیات (تومان)</th>
+        <th colspan="2">توضیحات</th>
+        <th>وضعیت سفارش</th>
+        <th>پرینت</th>
+        <th>لغو سفارش</th>
+        <th>وضعیت پرداخت</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  v-for="order in orders">
+        <td>@{{order.order_number}}</td>
+        <td>@{{order.table_id}}</td>
+        <td>
+           <button class="btn showDetail">مشاهده</button>
+           <div style="display: none;">
+             <table class="table table-striped">
+               <thead>
+                <tr>
+                  <th>نام</th>
+                  <th>تعداد</th>
+                  <th>قیمت</th>
+                 </tr>
+                </thead>
+                <tbody>
+                   <tr v-for="type in order.order">
+                       <td> @{{type.foodName}}</td>
+                       <td> @{{type.foodNumber}} </td>
+                       <td v-if="type.price%1000 != 0">@{{(parseInt(type.price/1000))+","+(type.price%1000)}}</td>
+                       <td v-if="type.price%1000 == 0">@{{(parseInt(type.price/1000))+","+'000'}}</td>
+                    </tr>
+                 </tbody>
+             </table>
+           </div>
+        </td>
+        <td><span v-if="order.hour > 0"> @{{ order.hour }} ساعت قبل</span><span v-if="order.minute >= 0"> @{{ order.minute }} دقیقه قبل</span></td>
+        <td>
+           <span v-if="order.price*(1+tax/100)%1000 != 0">@{{(parseInt(order.price*(1+tax/100)/1000))+","+parseInt((order.price*(1+tax/100))%1000)}}</span>
+           <span v-if="order.price*(1+tax/100)%1000 == 0">@{{(parseInt(order.price*(1+tax/100)/1000))+","+'000'}}</span>
+        </td>
+        <td colspan="2">@{{order.info}}</td>
+        <td> 
+             <a class="btnprn" v-if="order.delivered == 1"> <button class="btn">آماده تحویل </button></a>
+             <button v-if="order.delivered == 0 && order.pending == 1" id="proc@{{order.id}}" @click="cooking(order.id)"   class="btn">درحال پخت</button>
+             <button v-if="order.delivered == 0 && order.pending == 0" id="proc2@{{order.id}}" @click="sendForCook(order.id)"  class="btn">ارسال جهت پخت</button>
+        </td>
+        <td>
+           <button style="margin-right: 4%;"  id="print@{{ order.id }}"   style="cursor: pointer;" @click="printBill(order.id)"><img height="20" width="20" src="{{(('images/icons/printer.png'))}}"></button>
+        </td>
+        <td>
+           <button style="margin-right: 4%;"  id="cancel@{{ order.id }}"   style="cursor: pointer;" @click="cancel(order.id)"><img height="20" width="20" src="{{(('images/icons/cancel.png'))}}"></button>
+        </td>
+        <td>
+           <button v-if="order.paid == 1" class="btn">پرداخت شد </button>
+           <button class="btn"  v-else id="payment@{{order.id}}" @click="paid(order.id)">در انتظار پرداخت کاربر</button>
+        </td>
+      </tr>     
+    </tbody>
+   </table>
         <div  class="row" style="margin-top: 2%;margin-bottom: 2%;">
             <div v-for="order in orders" class="col-sm-12 col-md-4 col-lg-4" style="margin-bottom: 2%">
 
                 <div class="card" style="padding: 1%;">
                     <div class="flex-row space-around">
-
                         <span><b>سفارش: @{{order.order_number}}</b></span>
                         <span><b>شماره میز: @{{order.table_id}}</b></span>
                     </div>
@@ -43,7 +106,6 @@
                     <p>توضیحات: @{{order.info}}</p>
                     @if($restaurant->orderCode == 1)
                         <p>شناسه: @{{order.orderCode}}</p>
-
                     @endif
 
                     <div class="flex-row space-between" style="align-items: stretch;margin-bottom: 2%;">
@@ -69,18 +131,15 @@
         </div>
         {{--<div style="margin-right: 600px;" v-show="loader" class="loader"></div>--}}
         <div id="myModal" class="modal">
-
             <!-- Modal content -->
             <div class="modal-content">
-                <div class="text-center">
-                    <span class="close">&times;</span>
-                    <h2>خرید نسخه اصلی</h2>
-                    <h3 style="padding-top: 50px">@{{ message }}</h3>
-                </div>
-                <div class="container flex-column space-between" style="padding: 0px;height: 100%;" id="orderList">
-                </div>
+              <div class="text-center">
+               <span class="close">&times;</span>
+               <h2>شرح سفارش</h2>
+              </div>
+              <br/>
+              <div id="showOrderDetail"></div>
             </div>
-
         </div>
 
 
@@ -241,6 +300,17 @@
 
     <script type="text/javascript" src="{{URL::asset('js/printPage.js')}}"></script>
     <script>
+        var tableDetail;
+        $(document).on('click', '.showDetail', function(){ 
+          console.log("show detail");
+          console.log($(this).parent().children().eq(1));
+
+          $("#myModal").css("display","block");
+          tableDetail = $(this).parent().children().eq(1);
+          // tableDetail.show();
+          console.log("tableDetail");console.log(tableDetail);
+          $("#showOrderDetail").append(tableDetail.clone().show());
+        });
 
         window.addEventListener("load", function(){
             var load_screen = document.getElementById("load_screen");
@@ -252,7 +322,10 @@
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
             modal.style.display = "none";
+            tableDetail.hide();
+            $("#showOrderDetail").empty();
         };
+
         function myFunction() {
             var x = document.getElementById("myTopnav");
             if (x.className === "topnav") {
