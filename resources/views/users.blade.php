@@ -1,6 +1,21 @@
 @extends('master.layout')
 @section('content')
 <div class="container" style="margin-top: 2%;width: 90%;max-width: 2000px;" id="app" xmlns="http://www.w3.org/1999/html">
+  <div class="flex-row space-around">
+   <form class="flex-row space-around col-md-7" action="/action_page.php" style="margin-left: 20%;">
+    <label>جست و جو کاربر:</label>
+    <input type="text" class="form-control" placeholder="کد اشتراک را وارد کنید" style="margin-left: 1%;margin-right: 1%;width: 40%;">
+    <button type="submit" class="btn btn-primary">جست و جو</button>
+   </form>
+   <button class="btn btn-success" id="newUser">کاربر جدید</button>
+          <!--   <div class="flex-row flex-start">
+               <form>
+                 <
+               </form>
+            </div> -->
+            {{--<button @click="reset" :disabled="disbtn" href="{{route('reset')}}" class="btn btn-danger">@{{ orderCounter }}</button>--}}
+  </div>
+  <br/>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -57,6 +72,30 @@
            <input type="text" name='phoneNumber' placeholder="شماره تلفن" id="formPhoneNumber"/>
            <button style="font-size: 150%;font-weight: 400;" type="submit" id="registerButton">تغییر</button>
            <button style="margin-top: 2%;font-size: 150%;font-weight: 400;background-color: red;" type="submit">حذف</button>
+        </form>
+        </div>
+    </div>
+  </div>
+</div>
+<div id="myModal2" class="modal" style="color: black;">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close2">&times;</span>
+    <div>
+        <h2 class="text-center">تغییر اطلاعات اشتراک کاربر</h2>
+        <div class="form">
+         <form method="post" action="" class="register-form">
+           <!-- <input type="hidden" name="_token" value="{{csrf_token()}}"> -->
+           <input type="text"  hidden name="userCode" id="userCode"/>
+           <label>نام</label>
+           <input type="text" name="name" placeholder="نام" id="formName"/>
+           <label>آدرس</label>
+           <input type="text" name="address" placeholder="آدرس" id="formAddress"/>
+           <label>کد اشتراک</label>
+           <input type="text" name="newUserCode" placeholder="کد اشتراک" id="formUserCode"/>
+           <label>شماره تلفن</label>
+           <input type="text" name='phoneNumber' placeholder="شماره تلفن" id="formPhoneNumber"/>
+           <button style="font-size: 150%;font-weight: 400;" type="submit" id="registerButton">ثبت</button>
         </form>
         </div>
     </div>
@@ -259,10 +298,11 @@
 /* Modal Content/Box */
 .modal-content {
   background-color: #fefefe;
-  margin: 10% auto; /* 15% from the top and centered */
+  margin: 4% auto; /* 15% from the top and centered */
   padding: 20px;
+  padding-top: 8px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 70%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */
@@ -279,13 +319,27 @@
   text-decoration: none;
   cursor: pointer;
 }
+.close2 {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close2:hover,
+.close2:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 .form {
   /*position: relative;*/
   /*z-index: 1;*/
   /*background: #FFFFFF;*/
   max-width: 560px;
-  margin: 0 auto 100px;
+  margin: 0 auto 0px;
   padding: 45px;
+  padding-top: 10px;
   text-align: center;
   /*box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);*/
 }
@@ -299,10 +353,10 @@
   background: #f2f2f2;
   width: 100%;
   border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
+  margin: 0 0 10px;
+  padding: 10px;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 16px;
 }
 .form button {
   font-family: "Roboto", sans-serif;
@@ -327,12 +381,14 @@
 <script type="text/javascript">
     	// Get the modal
 var modal = document.getElementById('myModal');
+var modal2 = document.getElementById('myModal2');
 
 // Get the button that opens the modal
 var btn = document.getElementById("myBtn");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
+var span2 = document.getElementsByClassName("close2")[0];
 
 // When the user clicks on the button, open the modal
 $(document).on('click', '.btn-edit', function () {
@@ -343,11 +399,17 @@ $(document).on('click', '.btn-edit', function () {
   $("#formAddress").val($(this).parent().parent().children().eq(2).text());
   $("#formPhoneNumber").val($(this).parent().parent().children().eq(3).text());
 })
+$(document).on('click', '#newUser', function () {
+  modal2.style.display = "block";
+})
 
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
+}
+span2.onclick = function() {
+  modal2.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
