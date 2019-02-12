@@ -274,3 +274,5 @@ Route::post('remove-cashier','CashierController@removeCashiers')->name('removeCa
 
 Route::post('update-time','UserController@timeUpdate')->name('timeUpdate');
 
+Route::get('users','UsersController@getUsers')->name('users');
+

@@ -18,7 +18,8 @@
             @if(Auth::guard('cashier')->check())
                 <a  href="{{route('menu')}}" >مدیریت منو</a>
                 <a class="activeNav" href="{{route('orders')}}">سفارش ها</a>
-            <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+                <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+                <a href="{{route('users')}}">کاربران</a>
                 <a  href="{{route('main')}}">منو غذا </a>
             {{--<a href="{{route('message')}}">پیام ها</a>--}}
             @else
@@ -27,6 +28,7 @@
                 <a  href="{{route('report')}}">گزارش فروش</a>
 {{--                <a  href="{{route('resources')}}">مواد اولیه</a>--}}
             <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+            <a href="{{route('users')}}">کاربران</a>
                 <a  href="{{route('main')}}">منو غذا </a>
                 <a  href="{{route('settings')}}">تنظیمات</a>
                {{--<a href="{{route('message')}}">پیام ها</a>--}}
@@ -36,6 +38,7 @@
         <a  href="{{route('menu')}}" >مدیریت منو</a>
         <a  href="{{route('orders')}}">سفارش ها</a>
             <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+            <a href="{{route('users')}}">کاربران</a>
         <a  href="{{route('main')}}">منو غذا </a>
             {{--<a href="{{route('message')}}">پیام ها</a>--}}
                 @else
@@ -44,6 +47,7 @@
                 <a class="activeNav" href="{{route('report')}}">گزارش فروش</a>
                 {{--<a  href="{{route('resources')}}">مواد اولیه</a>--}}
             <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+            <a href="{{route('users')}}">کاربران</a>
                 <a  href="{{route('main')}}">منو غذا </a>
                 <a  href="{{route('settings')}}">تنظیمات</a>
             {{--<a href="{{route('message')}}">پیام ها</a>--}}
@@ -56,6 +60,7 @@
         <a  href="{{route('report')}}">گزارش فروش</a>
         {{--<a  href="{{route('resources')}}">مواد اولیه</a>--}}
         <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+        <a href="{{route('users')}}">کاربران</a>
         <a  href="{{route('main')}}">منو غذا </a>
         <a class="activeNav" href="{{route('settings')}}">تنظیمات</a>
         {{--<a href="{{route('message')}}">پیام ها</a>--}}
@@ -66,6 +71,7 @@
                 <a class="activeNav" href="{{route('menu')}}" >مدیریت منو</a>
                 <a  href="{{route('orders')}}">سفارش ها</a>
             <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+            <a href="{{route('users')}}">کاربران</a>
                 <a  href="{{route('main')}}">منو غذا </a>
             {{--<a href="{{route('message')}}">پیام ها</a>--}}
         @else
@@ -74,6 +80,7 @@
                 <a  href="{{route('report')}}">گزارش فروش</a>
                 {{--<a  href="{{route('resources')}}">مواد اولیه</a>--}}
             <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+            <a href="{{route('users')}}">کاربران</a>
                 <a  href="{{route('main')}}">منو غذا </a>
                 <a  href="{{route('settings')}}">تنظیمات</a>
             {{--<a href="{{route('message')}}">پیام ها</a>--}}
@@ -85,6 +92,7 @@
         <a  href="{{route('report')}}">گزارش فروش</a>
         {{--<a  href="{{route('resources')}}">مواد اولیه</a>--}}
         <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+        <a href="{{route('users')}}">کاربران</a>
         <a  href="{{route('main')}}">منو غذا </a>
         <a  href="{{route('settings')}}">تنظیمات</a>
         {{--<a href="{{route('message')}}">پیام ها</a>--}}
@@ -95,6 +103,7 @@
         <a  href="{{route('menu')}}" >مدیریت منو</a>
         <a class="activeNav" href="{{route('orders')}}">سفارش ها</a>
             <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+            <a href="{{route('users')}}">کاربران</a>
             <a  href="{{route('main')}}">منو غذا </a>
             <a href="{{route('message')}}">پیام ها</a>
         @else
@@ -103,6 +112,7 @@
         <a  href="{{route('report')}}">گزارش فروش</a>
         {{--<a  href="{{route('resources')}}">مواد اولیه</a>--}}
             <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+            <a href="{{route('users')}}">کاربران</a>
         <a  href="{{route('main')}}">منو غذا </a>
         <a  href="{{route('settings')}}">تنظیمات</a>
             {{--<a href="{{route('message')}}">پیام ها</a>--}}
@@ -114,6 +124,7 @@
         <a  href="{{route('report')}}">گزارش فروش</a>
         {{--<a class="activeNav" href="{{route('resources')}}">مواد اولیه</a>--}}
         <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+        <a href="{{route('users')}}">کاربران</a>
         <a  href="{{route('main')}}">منو غذا </a>
         <a  href="{{route('settings')}}">تنظیمات</a>
         {{--<a href="{{route('message')}}">پیام ها</a>--}}
@@ -124,6 +135,7 @@
         <a  href="{{route('report')}}">گزارش فروش</a>
         {{--<a  href="{{route('resources')}}">مواد اولیه</a>--}}
         <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+        <a href="{{route('users')}}">کاربران</a>
         <a class="activeNav"  href="{{route('main')}}">منو غذا </a>
         <a  href="{{route('settings')}}">تنظیمات</a>
         {{--<a href="{{route('message')}}">پیام ها</a>--}}
@@ -133,6 +145,7 @@
         <a class="activeNav"  href="{{route('report')}}">گزارش فروش</a>
         {{--<a  href="{{route('resources')}}">مواد اولیه</a>--}}
         <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+        <a href="{{route('users')}}">کاربران</a>
         <a   href="{{route('main')}}">منو غذا </a>
         <a  href="{{route('settings')}}">تنظیمات</a>
         {{--<a href="{{route('message')}}">پیام ها</a>--}}
@@ -143,6 +156,7 @@
         <a  href="{{route('report')}}">گزارش فروش</a>
         {{--<a  href="{{route('resources')}}">مواد اولیه</a>--}}
         <a   href="{{route('indexCashier')}}">منو صندوقدار </a>
+        <a href="{{route('users')}}">کاربران</a>
         <a   href="{{route('main')}}">منو غذا </a>
         <a  href="{{route('settings')}}">تنظیمات</a>
         {{--<a class="activeNav"  href="{{route('message')}}">پیام ها</a>--}}
@@ -153,6 +167,7 @@
             <a  href="{{route('orders')}}">سفارش ها</a>
             {{--<a class="activeNav" href="{{route('resources')}}">مواد اولیه</a>--}}
             <a class="activeNav"   href="{{route('indexCashier')}}">منو صندوقدار </a>
+            <a href="{{route('users')}}">کاربران</a>
             <a  href="{{route('main')}}">منو غذا </a>
         {{--<a href="{{route('message')}}">پیام ها</a>--}}
         @else
@@ -161,10 +176,18 @@
             <a  href="{{route('report')}}">گزارش فروش</a>
             {{--<a class="activeNav" href="{{route('resources')}}">مواد اولیه</a>--}}
             <a class="activeNav"   href="{{route('indexCashier')}}">منو صندوقدار </a>
+            <a href="{{route('users')}}">کاربران</a>
             <a  href="{{route('main')}}">منو غذا </a>
             <a  href="{{route('settings')}}">تنظیمات</a>
             @endif
-
+    @elseif(request()->route()->getName() == 'users')
+            <a  href="{{route('menu')}}" >مدیریت منو</a>
+            <a  href="{{route('orders')}}">سفارش ها</a>
+            <a  href="{{route('report')}}">گزارش فروش</a>
+            <a href="{{route('indexCashier')}}">منو صندوقدار </a>
+            <a class="activeNav" href="{{route('users')}}">کاربران</a>
+            <a  href="{{route('main')}}">منو غذا </a>
+            <a  href="{{route('settings')}}">تنظیمات</a>
     @endif
 
 

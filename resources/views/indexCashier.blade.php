@@ -241,13 +241,16 @@ $('.btnMines').invisible();
 }
 
 .tabs2 {
-  display: table;
-  table-layout: fixed;
+  /*display: table;*/
+  display: flex;
+  flex-wrap: wrap;
+  /*table-layout: fixed;*/
   width: 100%;
   -webkit-transform: translateY(5px);
   transform: translateY(5px);
 }
 .tabs2 > li {
+  width: 20%;
   transition-duration: .25s;
   display: table-cell;
   list-style: none;
