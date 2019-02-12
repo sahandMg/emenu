@@ -6,7 +6,7 @@
         <div class="flex-row space-around">
             <div class="flex-row flex-start">
                <a href="{{route('OrderCancel')}}" class="btn btn-danger" style="margin-left: 1%;margin-right: 1%;">سفارشات لغو شده</a>
-                <a href="{{route('ytd')}}" class="btn btn-warning" style="margin-left: 1%;margin-right: 1%">سفارشات دیروز</a>
+                <!-- <a href="{{route('ytd')}}" class="btn btn-warning" style="margin-left: 1%;margin-right: 1%">سفارشات دیروز</a> -->
                 <a href="{{route('orders')}}" class="btn btn-success" style="margin-left: 1%;margin-right: 1%;border: 2px solid black">سفارشات امروز</a>
             </div>
             {{--<button @click="reset" :disabled="disbtn" href="{{route('reset')}}" class="btn btn-danger">@{{ orderCounter }}</button>--}}
@@ -77,7 +77,17 @@
       </tr>     
     </tbody>
    </table>
-        <div  class="row" style="margin-top: 2%;margin-bottom: 2%;">
+   <br/>
+   <div>
+    <ul class="pagination">
+     <li class="page-item"><a class="page-link" href="#">قبلی</a></li>
+     <li class="page-item active"><a class="page-link" href="#">1</a></li>
+     <li class="page-item"><a class="page-link" href="#">2</a></li>
+     <li class="page-item"><a class="page-link" href="#">3</a></li>
+     <li class="page-item"><a class="page-link" href="#">بعدی</a></li>
+   </ul>
+  </div>
+        <!-- <div  class="row" style="margin-top: 2%;margin-bottom: 2%;">
             <div v-for="order in orders" class="col-sm-12 col-md-4 col-lg-4" style="margin-bottom: 2%">
 
                 <div class="card" style="padding: 1%;">
@@ -123,12 +133,12 @@
                         <button style="margin-right: 4%;"  id="cancel@{{ order.id }}"   style="cursor: pointer;" @click="cancel(order.id)"><img height="20" width="20" src="{{(('images/icons/cancel.png'))}}"></button>
                       </div>
                     </div>
-                    <!-- <br/> -->
                     <button v-if="order.paid == 1" class="btn btn-success">پرداخت شد </button>
                     <button class="btn btn-warning"  v-else id="payment@{{order.id}}" @click="paid(order.id)">در انتظار پرداخت کاربر</button>
                 </div>
             </div>
-        </div>
+        </div> -->
+        
         {{--<div style="margin-right: 600px;" v-show="loader" class="loader"></div>--}}
         <div id="myModal" class="modal">
             <!-- Modal content -->
@@ -300,6 +310,7 @@
 
     <script type="text/javascript" src="{{URL::asset('js/printPage.js')}}"></script>
     <script>
+        var numberOfPage = 1 ;
         var tableDetail;
         $(document).on('click', '.showDetail', function(){ 
           console.log("show detail");
@@ -351,7 +362,7 @@
 
                 vm = this;
                 this.loader = false;
-                axios.post('{{route('getOrders')}}').then(function (response) {
+                axios.post('{{route('getOrders')}}',{"num": numberOfPage}).then(function (response) {
                     vm.orders = response.data;
 //                console.log(response.data)
 
