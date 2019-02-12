@@ -75,6 +75,17 @@
                     <h2> {{$restaurant->name}} </h2>
                     <h2> {{$restaurant->tel}} </h2>
                 </div>
+                <div class="text-center">
+                <br>
+                <br>
+                <br>
+                @if(Auth::guard('cashier')->check())
+                    <p style="direction:rtl; font-size:20px">گیرنده سفارش : <span>{{Auth::guard('cashier')->user()->username}}</span></p>
+                @else
+                    <p>گیرنده سفارش : <span>{{Auth::guard('manager')->user()->username}}</span></p>
+                    @end
+                @endif
+                </div>
             <!-- </div> -->
     <br/><br/>
 </div>
@@ -89,12 +100,12 @@ th, td {
     text-align: right;
     border-bottom: 1px solid #ddd;
 }
-th {font-size: 30px;}
+th {font-size: 32px;}
 td {
-    font-size: 35px;
+    font-size: 37px;
 }
 p {
-    font-size: 35px;
+    font-size: 37px;
 }
 .displayBlock {
  display: block !important;

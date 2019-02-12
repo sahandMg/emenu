@@ -21,9 +21,9 @@
         <th>زمان</th>
         <th>مجموع کل + مالیات (تومان)</th>
         <th colspan="2">توضیحات</th>
-        <th>وضعیت سفارش</th>
+
         <th>پرینت</th>
-        <th>وضعیت پرداخت</th>
+
       </tr>
     </thead>
     <tbody>
@@ -34,11 +34,12 @@
            <button class="btn showDetail">مشاهده</button>
            <div style="display: none;">
              <table class="table table-striped">
-               <thead>
+                <thead>
                 <tr>
                   <th>نام</th>
                   <th>تعداد</th>
                   <th>قیمت</th>
+                  <th>گیرنده سفارش</th>
                  </tr>
                 </thead>
                 <tbody>
@@ -47,30 +48,30 @@
                        <td> @{{type.foodNumber}} </td>
                        <td v-if="type.price%1000 != 0">@{{(parseInt(type.price/1000))+","+(type.price%1000)}}</td>
                        <td v-if="type.price%1000 == 0">@{{(parseInt(type.price/1000))+","+'000'}}</td>
+                       <td>
+                           @if(Auth::guard('cashier')->check())
+                            {{Auth::guard('cashier')->user()->username}}
+                            @else
+                            {{Auth::guard('manager')->user()->username}}
+                            @endif
+                       </td>
                     </tr>
                  </tbody>
              </table>
            </div>
         </td>
-        <td><span v-if="order.hour > 0"> @{{ order.hour }} ساعت قبل</span><span v-if="order.minute >= 0"> @{{ order.minute }} دقیقه قبل</span></td>
+        <td><span>@{{order.created_at}}</span></td>
         <td>
            <span v-if="order.price*(1+tax/100)%1000 != 0">@{{(parseInt(order.price*(1+tax/100)/1000))+","+parseInt((order.price*(1+tax/100))%1000)}}</span>
            <span v-if="order.price*(1+tax/100)%1000 == 0">@{{(parseInt(order.price*(1+tax/100)/1000))+","+'000'}}</span>
         </td>
         <td colspan="2">@{{order.info}}</td>
-        <td> 
-             <a class="btnprn" v-if="order.delivered == 1"> <button class="btn">آماده تحویل </button></a>
-             <button v-if="order.delivered == 0 && order.pending == 1" id="proc@{{order.id}}" @click="cooking(order.id)"   class="btn">درحال پخت</button>
-             <button v-if="order.delivered == 0 && order.pending == 0" id="proc2@{{order.id}}" @click="sendForCook(order.id)"  class="btn">ارسال جهت پخت</button>
-        </td>
+
         <td>
            <button style="margin-right: 4%;"  id="print@{{ order.id }}"   style="cursor: pointer;" @click="printBill(order.id)"><img height="20" width="20" src="{{(('images/icons/printer.png'))}}"></button>
         </td>
-        <td>
-           <button v-if="order.paid == 1" class="btn">پرداخت شد </button>
-           <button class="btn"  v-else id="payment@{{order.id}}" @click="paid(order.id)">در انتظار پرداخت کاربر</button>
-        </td>
-      </tr>     
+
+      </tr>
     </tbody>
    </table>
    <br/>
@@ -83,7 +84,7 @@
      <li class="page-item"><a class="page-link" href="#">بعدی</a></li>
    </ul>
   </div>
-       
+
        <!--  <div id="myModal" class="modal">
             <div class="modal-content">
                 <div class="text-center">
@@ -264,9 +265,10 @@
 
     <script type="text/javascript" src="{{URL::asset('js/printPage.js')}}"></script>
     <script>
-
+        var ordersNumber = {!! $cancels !!}
+        var numberOfPage = 1 ;
          var tableDetail;
-        $(document).on('click', '.showDetail', function(){ 
+        $(document).on('click', '.showDetail', function(){
           console.log("show detail");
           console.log($(this).parent().children().eq(1));
 
@@ -290,7 +292,7 @@
             tableDetail.hide();
             $("#showOrderDetail").empty();
         };
-        
+
         function myFunction() {
             var x = document.getElementById("myTopnav");
             if (x.className === "topnav") {
@@ -316,9 +318,9 @@
 
                 vm = this;
                 this.loader = false;
-                axios.get('{{route('getCancel')}}').then(function (response) {
+                axios.get('{{route('getCancel')}}'+'?num=').then(function (response) {
                     vm.orders = response.data;
-                {{--  console.log(response.data)  --}}
+                console.log(response.data)
 
                 });
 
