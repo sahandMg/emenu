@@ -77,7 +77,17 @@
       </tr>     
     </tbody>
    </table>
-        <div  class="row" style="margin-top: 2%;margin-bottom: 2%;">
+   <br/>
+   <div>
+    <ul class="pagination">
+     <li class="page-item"><a class="page-link" href="#">قبلی</a></li>
+     <li class="page-item active"><a class="page-link" href="#">1</a></li>
+     <li class="page-item"><a class="page-link" href="#">2</a></li>
+     <li class="page-item"><a class="page-link" href="#">3</a></li>
+     <li class="page-item"><a class="page-link" href="#">بعدی</a></li>
+   </ul>
+  </div>
+        <!-- <div  class="row" style="margin-top: 2%;margin-bottom: 2%;">
             <div v-for="order in orders" class="col-sm-12 col-md-4 col-lg-4" style="margin-bottom: 2%">
 
                 <div class="card" style="padding: 1%;">
@@ -123,12 +133,12 @@
                         <button style="margin-right: 4%;"  id="cancel@{{ order.id }}"   style="cursor: pointer;" @click="cancel(order.id)"><img height="20" width="20" src="{{(('images/icons/cancel.png'))}}"></button>
                       </div>
                     </div>
-                    <!-- <br/> -->
                     <button v-if="order.paid == 1" class="btn btn-success">پرداخت شد </button>
                     <button class="btn btn-warning"  v-else id="payment@{{order.id}}" @click="paid(order.id)">در انتظار پرداخت کاربر</button>
                 </div>
             </div>
-        </div>
+        </div> -->
+        
         {{--<div style="margin-right: 600px;" v-show="loader" class="loader"></div>--}}
         <div id="myModal" class="modal">
             <!-- Modal content -->
