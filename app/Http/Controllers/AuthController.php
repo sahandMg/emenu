@@ -125,11 +125,15 @@ class AuthController extends Controller
         {
          $ivlen = openssl_cipher_iv_length($cipher);
          $ciphertext = openssl_encrypt($randomNumber, $cipher, $key1, $options=0, $key1, $tag);
+         $ciphertext = preg_replace("/[^a-zA-Z0-9]+/", "", $ciphertext);
+         $ciphertext = strtolower($ciphertext);
          $ciphertext2 = openssl_encrypt($randomNumber, $cipher, $key2, $options=0, $key2, $tag);
+         $ciphertext2 = preg_replace("/[^a-zA-Z0-9]+/", "", $ciphertext2);
+         $ciphertext2 = strtolower($ciphertext2);
          return [$randomNumber,$ciphertext,$ciphertext2];
 
        }
-      }
+    }
 
       public function checkMe($code=null){
 

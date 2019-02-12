@@ -77,11 +77,6 @@
    <br/>
    <div>
     <ul class="pagination">
-     <li class="page-item"><a class="page-link" href="#">قبلی</a></li>
-     <li class="page-item active"><a class="page-link" href="#">1</a></li>
-     <li class="page-item"><a class="page-link" href="#">2</a></li>
-     <li class="page-item"><a class="page-link" href="#">3</a></li>
-     <li class="page-item"><a class="page-link" href="#">بعدی</a></li>
    </ul>
   </div>
 
@@ -266,6 +261,13 @@
     <script type="text/javascript" src="{{URL::asset('js/printPage.js')}}"></script>
     <script>
         var ordersNumber = {!! $cancels !!}
+         for(var i=0; i<ordersNumber;i++) {
+          if (i==0) {
+            $(".pagination").append(`<li class="page-item active"><a class="page-link" href="#">`+(parseInt(i)+1)+`</a></li>`);
+          } else {
+             $(".pagination").append(`<li class="page-item"><a class="page-link" href="#">`+(parseInt(i)+1)+`</a></li>`);
+          }     
+        }
         var numberOfPage = 1 ;
          var tableDetail;
         $(document).on('click', '.showDetail', function(){
@@ -302,7 +304,7 @@
             }
         }
 
-        new Vue({
+        var vueGetOriders = new Vue({
             el:'#order',
             data:{
                 orders:[],
@@ -334,16 +336,33 @@
             },
 
             methods:{
-
+         
                 printBill:function(id){
                     axios.get('{{route('bill')}}'+'?id='+id).then(function (response) {
 
                     })
                 },
 
+                getAllOrders: function() {
+                   axios.get('{{route('getCancel')}}'+'?num='+numberOfPage).then(function (response) {
+                    vm.orders = response.data;
+                    console.log(response.data)
+                   });
+                }
+
             },
 
 
         })
+
+        $(document).on('click', '.page-item', function(){
+           $(".active").removeClass("active");
+           $(this).addClass("active");
+           console.log("page-item");
+           console.log($(this).text());
+           numberOfPage = parseInt($(this).text());
+           console.log(vueGetOriders);
+           vueGetOriders.getAllOrders();
+        });
     </script>
 @endsection

@@ -89,9 +89,6 @@
    <br/>
    <div>
     <ul class="pagination">
-     <li class="page-item active"><a class="page-link" href="#">1</a></li>
-     <li class="page-item"><a class="page-link" href="#">2</a></li>
-     <li class="page-item"><a class="page-link" href="#">3</a></li>
    </ul>
   </div>
         <!-- <div  class="row" style="margin-top: 2%;margin-bottom: 2%;">
@@ -318,6 +315,13 @@
     <script type="text/javascript" src="{{URL::asset('js/printPage.js')}}"></script>
     <script>
         var ordersNumber = {!! $count !!}
+        for(var i=0; i<ordersNumber;i++) {
+          if (i==0) {
+            $(".pagination").append(`<li class="page-item active"><a class="page-link" href="#">`+(parseInt(i)+1)+`</a></li>`);
+          } else {
+             $(".pagination").append(`<li class="page-item"><a class="page-link" href="#">`+(parseInt(i)+1)+`</a></li>`);
+          }     
+        }
         var numberOfPage = 1 ;
 
         var tableDetail;
@@ -355,7 +359,7 @@
             }
         }
 
-        new Vue({
+        var vueGetOriders = new Vue({
             el:'#order',
             data:{
                 orders:[],
@@ -382,9 +386,9 @@
 
                 });
 
-                setTimeout(function () {
-                    window.location.href = {!! json_encode(route('orders')) !!}
-                },120000);
+                // setTimeout(function () {
+                //     window.location.href = {!! json_encode(route('orders')) !!}
+                // },120000);
 
                 this.getAllOrders();
 
@@ -410,31 +414,31 @@
                 },
                 getMsg:function () {
                     vm = this;
-                    axios.get('{{route('getOrderId')}}').then(function (response) {
-                        var id = response.data;
-                        if({{\App\Manager::first()->original}} != 1)
-                        {
+                    // axios.get('{{route('getOrderId')}}').then(function (response) {
+                    //     var id = response.data;
+                    //     if({{\App\Manager::first()->original}} != 1)
+                    //     {
 
-                            if (id == 50 && {!! json_encode(Cache::get('warn1')) !!} == 0) {
-                                vm.modal = 'block';
-                                vm.message = 'مشترک گرامی، تنها ۱۰۰ سفارش دیگر قابل ثبت می باشد. برای خرید نسخه اصلی این برنامه، با شماره ۰۹۱۰۴۹۶۳۷۳۴ و یا ۰۹۳۷۱۸۶۹۵۶۸ تماس حاصل فرمایید'
-                                {!! json_encode(Cache::forever('warn1',1)) !!}
-                            } else if ( id == 100 && {!! json_encode(Cache::get('warn2')) !!} == 0) {
-                                vm.modal = 'block';
-                                vm.message = 'مشترک گرامی، تنها ۵۰ سفارش دیگر قابل ثبت می باشد. برای خرید نسخه اصلی این برنامه، با شماره ۰۹۱۰۴۹۶۳۷۳۴ و یا ۰۹۳۷۱۸۶۹۵۶۸ تماس حاصل فرمایید'
-                                {!! json_encode(Cache::forever('warn2',2)) !!}
-                            } else if (id == 130 && {!! json_encode(Cache::get('warn3')) !!} == 0) {
-                                vm.modal = 'block';
-                                vm.message = 'مشترک گرامی، تنها ۲۰ سفارش دیگر قابل ثبت می باشد. برای خرید نسخه اصلی این برنامه، با شماره ۰۹۱۰۴۹۶۳۷۳۴ و یا ۰۹۳۷۱۸۶۹۵۶۸ تماس حاصل فرمایید'
-                                {!! json_encode(Cache::forever('warn3',3)) !!}
-                            } else if (id == 150 && {!! json_encode(Cache::get('warn4')) !!} == 0) {
-                                vm.modal = 'block';
-                                vm.message = 'مشترک گرامی، برای خرید نسخه اصلی این برنامه، با شماره ۰۹۱۰۴۹۶۳۷۳۴ و یا ۰۹۳۷۱۸۶۹۵۶۸ تماس حاصل فرمایید'
-                                {!! json_encode(Cache::forever('warn4',4)) !!}
-                            }
-                        }
-                    });
-                    setTimeout(vm.getMsg,15000);
+                    //         if (id == 50 && {!! json_encode(Cache::get('warn1')) !!} == 0) {
+                    //             vm.modal = 'block';
+                    //             vm.message = 'مشترک گرامی، تنها ۱۰۰ سفارش دیگر قابل ثبت می باشد. برای خرید نسخه اصلی این برنامه، با شماره ۰۹۱۰۴۹۶۳۷۳۴ و یا ۰۹۳۷۱۸۶۹۵۶۸ تماس حاصل فرمایید'
+                    //             {!! json_encode(Cache::forever('warn1',1)) !!}
+                    //         } else if ( id == 100 && {!! json_encode(Cache::get('warn2')) !!} == 0) {
+                    //             vm.modal = 'block';
+                    //             vm.message = 'مشترک گرامی، تنها ۵۰ سفارش دیگر قابل ثبت می باشد. برای خرید نسخه اصلی این برنامه، با شماره ۰۹۱۰۴۹۶۳۷۳۴ و یا ۰۹۳۷۱۸۶۹۵۶۸ تماس حاصل فرمایید'
+                    //             {!! json_encode(Cache::forever('warn2',2)) !!}
+                    //         } else if (id == 130 && {!! json_encode(Cache::get('warn3')) !!} == 0) {
+                    //             vm.modal = 'block';
+                    //             vm.message = 'مشترک گرامی، تنها ۲۰ سفارش دیگر قابل ثبت می باشد. برای خرید نسخه اصلی این برنامه، با شماره ۰۹۱۰۴۹۶۳۷۳۴ و یا ۰۹۳۷۱۸۶۹۵۶۸ تماس حاصل فرمایید'
+                    //             {!! json_encode(Cache::forever('warn3',3)) !!}
+                    //         } else if (id == 150 && {!! json_encode(Cache::get('warn4')) !!} == 0) {
+                    //             vm.modal = 'block';
+                    //             vm.message = 'مشترک گرامی، برای خرید نسخه اصلی این برنامه، با شماره ۰۹۱۰۴۹۶۳۷۳۴ و یا ۰۹۳۷۱۸۶۹۵۶۸ تماس حاصل فرمایید'
+                    //             {!! json_encode(Cache::forever('warn4',4)) !!}
+                    //         }
+                    //     }
+                    // });
+                    // setTimeout(vm.getMsg,15000);
                 },
                 reset:function () {
                     axios.get('{{route('reset')}}').then(function (response) {
@@ -443,6 +447,7 @@
                     this.disbtn = true
                 },
                 getAllOrders:function () {
+                    console.log("getAllOrders");
                     vm = this;
                     axios.post('{{route('getOrders')}}',{"num": numberOfPage}).then(function (response) {
                         vm.orders = response.data;
@@ -495,5 +500,15 @@
             },
 
         })
+
+      $(document).on('click', '.page-item', function(){
+           $(".active").removeClass("active");
+           $(this).addClass("active");
+           console.log("page-item");
+           console.log($(this).text());
+           numberOfPage = parseInt($(this).text());
+           console.log(vueGetOriders);
+           vueGetOriders.getAllOrders();
+        });
     </script>
 @endsection
