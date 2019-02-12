@@ -12,6 +12,7 @@
             {{--<button @click="reset" :disabled="disbtn" href="{{route('reset')}}" class="btn btn-danger">@{{ orderCounter }}</button>--}}
         </div>
         <br/>
+
   <table class="table">
     <thead>
       <tr>
@@ -40,6 +41,7 @@
                   <th>نام</th>
                   <th>تعداد</th>
                   <th>قیمت</th>
+                  <th>گیرنده سفارش</th>
                  </tr>
                 </thead>
                 <tbody>
@@ -48,6 +50,13 @@
                        <td> @{{type.foodNumber}} </td>
                        <td v-if="type.price%1000 != 0">@{{(parseInt(type.price/1000))+","+(type.price%1000)}}</td>
                        <td v-if="type.price%1000 == 0">@{{(parseInt(type.price/1000))+","+'000'}}</td>
+                       <td>
+                           @if(Auth::guard('cashier')->check())
+                            {{Auth::guard('cashier')->user()->username}}
+                            @else
+                            {{Auth::guard('manager')->user()->username}}
+                            @endif
+                       </td>
                     </tr>
                  </tbody>
              </table>
@@ -59,7 +68,7 @@
            <span v-if="order.price*(1+tax/100)%1000 == 0">@{{(parseInt(order.price*(1+tax/100)/1000))+","+'000'}}</span>
         </td>
         <td colspan="2">@{{order.info}}</td>
-        <td> 
+        <td>
              <a class="btnprn" v-if="order.delivered == 1"> <button class="btn">آماده تحویل </button></a>
              <button v-if="order.delivered == 0 && order.pending == 1" id="proc@{{order.id}}" @click="cooking(order.id)"   class="btn">درحال پخت</button>
              <button v-if="order.delivered == 0 && order.pending == 0" id="proc2@{{order.id}}" @click="sendForCook(order.id)"  class="btn">ارسال جهت پخت</button>
@@ -74,7 +83,7 @@
            <button v-if="order.paid == 1" class="btn">پرداخت شد </button>
            <button class="btn"  v-else id="payment@{{order.id}}" @click="paid(order.id)">در انتظار پرداخت کاربر</button>
         </td>
-      </tr>     
+      </tr>
     </tbody>
    </table>
    <br/>
@@ -136,7 +145,7 @@
                 </div>
             </div>
         </div> -->
-        
+
         {{--<div style="margin-right: 600px;" v-show="loader" class="loader"></div>--}}
         <div id="myModal" class="modal">
             <!-- Modal content -->
@@ -308,10 +317,11 @@
 
     <script type="text/javascript" src="{{URL::asset('js/printPage.js')}}"></script>
     <script>
+        var ordersNumber = {!! $count !!}
         var numberOfPage = 1 ;
 
         var tableDetail;
-        $(document).on('click', '.showDetail', function(){ 
+        $(document).on('click', '.showDetail', function(){
           console.log("show detail");
           console.log($(this).parent().children().eq(1));
 
@@ -363,7 +373,7 @@
                 this.loader = false;
                 axios.post('{{route('getOrders')}}',{"num": numberOfPage}).then(function (response) {
                     vm.orders = response.data;
-//                console.log(response.data)
+               // console.log(response.data)
 
                 });
                 axios.get('{{route('getTax')}}').then(function (response) {
@@ -388,8 +398,8 @@
             methods:{
                 cancel:function(id){
                    vm = this;
-                    axios.post('{{route('OrderCancel')}}',{'id':id}).then(function (response) {
-                       {{--  console.log(response.data)  --}}
+                    axios.post('{{route('OrderCancel')}}',{'id':id,"num": numberOfPage}).then(function (response) {
+
                         vm.orders = response.data;
                     })
                 },
@@ -434,14 +444,15 @@
                 },
                 getAllOrders:function () {
                     vm = this;
-                    axios.post('{{route('getOrders')}}').then(function (response) {
+                    axios.post('{{route('getOrders')}}',{"num": numberOfPage}).then(function (response) {
                         vm.orders = response.data;
                     });
+
                     setTimeout(vm.getAllOrders,10000);
                 },
                 cooking:function (id) {
                     vm = this;
-                    axios.post('{{route('delivered')}}',{'id':id}).then(function (response) {
+                    axios.post('{{route('delivered')}}',{'id':id,"num": numberOfPage}).then(function (response) {
 
 //                        document.getElementById('proc2'+id).hidden=true;
 //                        document.getElementById('print'+id).hidden=false;
@@ -456,7 +467,7 @@
                 },
                 sendForCook:function (id) {
                     vm = this;
-                    axios.post('{{route('pending')}}',{'id':id}).then(function (response) {
+                    axios.post('{{route('pending')}}',{'id':id,"num": numberOfPage}).then(function (response) {
                         console.log(response.data);
 //                    document.getElementById('proc'+id).hidden=true;
 //                    document.getElementById('proc2'+id).hidden=false;
@@ -465,7 +476,7 @@
                 },
                 paid:function(id) {
                     vm = this;
-                    axios.post('{{route('paid')}}',{'id':id}).then(function (response) {
+                    axios.post('{{route('paid')}}',{'id':id,"num": numberOfPage}).then(function (response) {
 //            document.getElementById('payment'+id).innerHTML='پرداخت شد';
 //            document.getElementById('payment'+id).className='btn btn-success';
 //            console.log(response.data)

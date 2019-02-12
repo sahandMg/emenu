@@ -40,6 +40,7 @@ class ManagerController extends Controller
 
     public function post_settings(Request $request){
 
+
         $restaurant =  DB::table('restaurants')->first();
 
         if(!is_null($request->printer)){
@@ -81,9 +82,10 @@ class ManagerController extends Controller
 
                 DB::table('restaurants')->update(['orderCode' => '1']);
             }
-        }else{
-            DB::table('restaurants')->update(['orderCode' => '0']);
         }
+        // else{
+        //     DB::table('restaurants')->update(['orderCode' => '0']);
+        // }
 
         if($request->has('payMethod')){
 
@@ -91,18 +93,20 @@ class ManagerController extends Controller
 
                 DB::table('restaurants')->update(['payMethod' => '1']);
             }
-        }else{
-            DB::table('restaurants')->update(['payMethod' => '0']);
         }
+        // else{
+        //     DB::table('restaurants')->update(['payMethod' => '0']);
+        // }
         if($request->has('tableCounting')){
 
             if($request->tableCounting == 'on'){
 
                 DB::table('restaurants')->update(['tableCounting' => '1']);
             }
-        }else{
-            DB::table('restaurants')->update(['tableCounting' => '0']);
         }
+        // else{
+        //     DB::table('restaurants')->update(['tableCounting' => '0']);
+        // }
         if($request->has('image')){
             $extension = $request->file('image')->getClientOriginalExtension();
 
