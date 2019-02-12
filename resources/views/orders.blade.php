@@ -310,6 +310,7 @@
 
     <script type="text/javascript" src="{{URL::asset('js/printPage.js')}}"></script>
     <script>
+        var numberOfPage = 1 ;
         var tableDetail;
         $(document).on('click', '.showDetail', function(){ 
           console.log("show detail");
@@ -361,7 +362,7 @@
 
                 vm = this;
                 this.loader = false;
-                axios.post('{{route('getOrders')}}').then(function (response) {
+                axios.post('{{route('getOrders')}}',{"num": numberOfPage}).then(function (response) {
                     vm.orders = response.data;
 //                console.log(response.data)
 
