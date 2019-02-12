@@ -80,11 +80,9 @@
    <br/>
    <div>
     <ul class="pagination">
-     <li class="page-item"><a class="page-link" href="#">قبلی</a></li>
      <li class="page-item active"><a class="page-link" href="#">1</a></li>
      <li class="page-item"><a class="page-link" href="#">2</a></li>
      <li class="page-item"><a class="page-link" href="#">3</a></li>
-     <li class="page-item"><a class="page-link" href="#">بعدی</a></li>
    </ul>
   </div>
         <!-- <div  class="row" style="margin-top: 2%;margin-bottom: 2%;">
@@ -311,6 +309,7 @@
     <script type="text/javascript" src="{{URL::asset('js/printPage.js')}}"></script>
     <script>
         var numberOfPage = 1 ;
+
         var tableDetail;
         $(document).on('click', '.showDetail', function(){ 
           console.log("show detail");
