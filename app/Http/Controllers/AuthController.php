@@ -107,6 +107,11 @@ class AuthController extends Controller
         if($query->original == 1){
             $original = 1;
         }
+        $this->validate($request,[
+            'username'=>'required',
+            'tel'=>'required'
+
+        ]);
         DB::table('activations')->where('code',$request->code)->update(['expired'=>1]);
         DB::table('managers')->insert([
             'username'=>strtolower($request->username),

@@ -14,13 +14,13 @@
     <h4 style="direction: rtl;text-align: center;">تلفن پشتیبانی : 09104963734</h4>
   </div>
 <div class="login-page">
-    {{--@if($errors->all())--}}
-        {{--<div class="alert alert-danger" role="alert">--}}
-            {{--@foreach($errors->all() as $error)--}}
-                {{--<li style="list-style: none">{{$error}}</li>--}}
-            {{--@endforeach--}}
-        {{--</div>--}}
-    {{--@endif--}}
+    @if($errors->all())
+        <div class="alert alert-danger" role="alert">
+            @foreach($errors->all() as $error)
+                <li style="list-style: none">{{$error}}</li>
+            @endforeach
+        </div>
+    @endif
 
         @if(session('message'))
             <div class="alert alert-danger" role="alert">

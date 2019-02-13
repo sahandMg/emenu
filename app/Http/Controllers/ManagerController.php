@@ -77,53 +77,42 @@ class ManagerController extends Controller
 
           if($request->has('orderCode')){
 
-           if($request->orderCode == 'on'){
-
-                DB::table('restaurants')->update(['orderCode' => '1']);
-            }
-
-              if($request->orderCode == 'off'){
-
-                  DB::table('restaurants')->update(['orderCode' => '0']);
-              }
-
+            DB::table('restaurants')->update(['orderCode' => '1']);
 
           }
-        // else{
-        //     DB::table('restaurants')->update(['orderCode' => '0']);
-        // }
-//    dd($request->all());
+
+        if(!$request->has('orderCode')){
+
+            DB::table('restaurants')->update(['orderCode' => '0']);
+
+        }
+
+
         if($request->has('payMethod')){
 
-            if($request->payMethod == 'on'){
-
                 DB::table('restaurants')->update(['payMethod' => '1']);
-            }
-            if($request->payMethod == 'off'){
+         }
+        if(!$request->has('payMethod')){
 
-                DB::table('restaurants')->update(['payMethod' => '0']);
-            }
-
-
+            DB::table('restaurants')->update(['payMethod' => '0']);
         }
-        // else{
-        //     DB::table('restaurants')->update(['payMethod' => '0']);
-        // }
+
+//            dd($request->all());
         if($request->has('tableCounting')){
 
-            if($request->tableCounting == 'on'){
+            DB::table('restaurants')->update(['tableCounting' => '1']);
 
-                DB::table('restaurants')->update(['tableCounting' => '1']);
-            }
-
-            if($request->tableCounting == 'off'){
-
-                DB::table('restaurants')->update(['tableCounting' => '0']);
-            }
         }
-        // else{
-        //     DB::table('restaurants')->update(['tableCounting' => '0']);
-        // }
+        if(!$request->has('tableCounting')){
+
+            DB::table('restaurants')->update(['tableCounting' => '0']);
+
+        }
+
+
+
+
+
         if($request->has('image')){
             $extension = $request->file('image')->getClientOriginalExtension();
 

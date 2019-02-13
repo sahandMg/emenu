@@ -41,37 +41,31 @@
                 <!-- <div class="form-check"> -->
                 <label class="container-checkBox">پرداخت بعد از ثبت سفارش :
                     @if($restaurant->payMethod == 1)
-                        <input name="payMethod_hidden" type="hidden" value="off" >
                         <input name="payMethod" type="checkbox"  checked>
                         <span class="checkmark"></span>
-                        @else
-                        <input name="payMethod_hidden" type="hidden" value="off" >
+                    @else
                         <input name="payMethod" type="checkbox" >
+
                         <span class="checkmark"></span>
-                        @endif
+                    @endif
                 </label>
                 <label class="container-checkBox">اعمال شماره بندی میزها :
 
                     @if($restaurant->tableCounting == 1)
-                        <input name="tableCounting_hidden" type="hidden" value="off" >
                         <input name="tableCounting" type="checkbox" checked>
-
                         <span class="checkmark"></span>
                     @else
-
-                        <input name="tableCounting_hidden" type="hidden" value="off" >
-                        <input name="tableCounting" type="checkbox">
-
+                        <input name="tableCounting" type="checkbox" >
                         <span class="checkmark"></span>
                     @endif
                 </label>
                   <label class="container-checkBox">کد شناسایی سفارش :
                     @if($restaurant->orderCode == 1)
-                        <input name="orderCode_hidden" type="hidden" value="off" >
+                        {{--<input name="orderCode_hidden" type="hidden" value="off" >--}}
                         <input name="orderCode" type="checkbox"  checked>
                         <span class="checkmark"></span>
                     @else
-                          <input name="orderCode_hidden" type="hidden" value="off" >
+                          {{--<input name="orderCode_hidden" type="checkbox" value="off" >--}}
                       <input name="orderCode" type="checkbox" >
                         <span class="checkmark"></span>
                     @endif
@@ -86,6 +80,15 @@
             <h2 class="text-center">مدیریت کاربران</h2>
              <form action="{{route('settings')}}" method="post" enctype="multipart/form-data" style="margin-bottom: 2%;">
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
+                 @if($restaurant->tableCounting == 1)
+                     <input name="tableCounting" type="hidden" value="on">
+                 @endif
+                 @if($restaurant->payMethod == 1)
+                     <input name="payMethod" type="hidden" value="on">
+                 @endif
+                 @if($restaurant->orderCode == 1)
+                     <input name="orderCode" type="hidden" value="on">
+                 @endif
                 <div class="form-group">
                     <label>نام کاربری</label>
                     <input type="text" name="username"  class="form-control" placeholder="نام کاربری">
@@ -130,6 +133,15 @@
   <h2 class="text-center">تنظیمات پرینتر</h2>
       <form action="{{route('settings')}}" method="post" enctype="multipart/form-data" style="margin-bottom: 2%;">
           <input type="hidden" name="_token" value="{{csrf_token()}}">
+          @if($restaurant->tableCounting == 1)
+          <input name="tableCounting" type="hidden" value="on">
+          @endif
+          @if($restaurant->payMethod == 1)
+              <input name="payMethod" type="hidden" value="on">
+          @endif
+          @if($restaurant->orderCode == 1)
+              <input name="orderCode" type="hidden" value="on">
+          @endif
           <div class="form-group">
                <label>نام پرینتر</label>
                <input type="text" name="printer"  class="form-control" placeholder="نام پرینتر">
@@ -143,6 +155,15 @@
   <h2 class="text-center">تغییر رمز عبور</h2>
       <form action="{{route('settings')}}" method="post" enctype="multipart/form-data" style="margin-bottom: 2%;">
           <input type="hidden" name="_token" value="{{csrf_token()}}">
+          @if($restaurant->tableCounting == 1)
+              <input name="tableCounting" type="hidden" value="on">
+          @endif
+          @if($restaurant->payMethod == 1)
+              <input name="payMethod" type="hidden" value="on">
+          @endif
+          @if($restaurant->orderCode == 1)
+              <input name="orderCode" type="hidden" value="on">
+          @endif
           <div class="form-group">
                <label>رمز فعلی</label>
                <input required type="password" name="oldPassword"  class="form-control" placeholder="کلمه عبور فعلی">
