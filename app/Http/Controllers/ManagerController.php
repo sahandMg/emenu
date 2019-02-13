@@ -40,7 +40,6 @@ class ManagerController extends Controller
 
     public function post_settings(Request $request){
 
-
         $restaurant =  DB::table('restaurants')->first();
 
         if(!is_null($request->printer)){

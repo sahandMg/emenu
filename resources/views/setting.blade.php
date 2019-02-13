@@ -41,10 +41,11 @@
                 <!-- <div class="form-check"> -->
                 <label class="container-checkBox">پرداخت بعد از ثبت سفارش :
                     @if($restaurant->payMethod == 1)
+                        <input name="payMethod_hidden" type="hidden" value="off" >
                         <input name="payMethod" type="checkbox"  checked>
                         <span class="checkmark"></span>
                         @else
-                        <input name="payMethod" type="hidden" value="off" >
+                        <input name="payMethod_hidden" type="hidden" value="off" >
                         <input name="payMethod" type="checkbox" >
                         <span class="checkmark"></span>
                         @endif
@@ -52,12 +53,13 @@
                 <label class="container-checkBox">اعمال شماره بندی میزها :
 
                     @if($restaurant->tableCounting == 1)
+                        <input name="tableCounting_hidden" type="hidden" value="off" >
                         <input name="tableCounting" type="checkbox" checked>
 
                         <span class="checkmark"></span>
                     @else
 
-                        <input name="tableCounting" type="hidden" value="off" >
+                        <input name="tableCounting_hidden" type="hidden" value="off" >
                         <input name="tableCounting" type="checkbox">
 
                         <span class="checkmark"></span>
@@ -65,11 +67,11 @@
                 </label>
                   <label class="container-checkBox">کد شناسایی سفارش :
                     @if($restaurant->orderCode == 1)
-
-                          <input name="orderCode" type="checkbox"  checked>
+                        <input name="orderCode_hidden" type="hidden" value="off" >
+                        <input name="orderCode" type="checkbox"  checked>
                         <span class="checkmark"></span>
                     @else
-                          <input name="orderCode" type="hidden" value="off" >
+                          <input name="orderCode_hidden" type="hidden" value="off" >
                       <input name="orderCode" type="checkbox" >
                         <span class="checkmark"></span>
                     @endif
