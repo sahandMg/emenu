@@ -13,7 +13,8 @@ use Morilog\Jalali\Jalalian;
 
 class OrderController extends Controller
 {
-    public $skip = 5;
+    // data per page
+    public $skip = 50;
     public function __construct()
     {
     $this->middleware(['activated','auth:manager,cashier'])->except('hasTable','sendOrder','paidStat');
@@ -23,9 +24,18 @@ class OrderController extends Controller
 
 
 
-       $count = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
-            ->where('created_at','<',Carbon::tomorrow()->toDateTimeString())
-            ->orderBy('created_at','desc')->count();
+       // $ordersNum = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
+        $ordersNum = DB::table('orders')
+            // ->where('created_at','<',Carbon::tomorrow()->toDateTimeString())
+            ->orderBy('id','desc')->count();
+
+            // gives last 500 queries
+            if($ordersNum > 500){
+
+                $ordersNum = 500;
+            }
+
+            $count = ceil($ordersNum / $this->skip);
             $restaurant = DB::table('restaurants')->first();
         return view('orders',compact('count','restaurant'));
     }
@@ -41,7 +51,10 @@ class OrderController extends Controller
         $orders = json_decode($orders,true);
         for ($i=0;$i<count($orders) ; $i++){
             $orders[$i]['order'] = unserialize($orders[$i]['order']);
-            if(Carbon::now()->diffInMinutes($orders[$i]['created_at'])>60){
+           if(Carbon::now()->diffInHours($orders[$i]['created_at'])>24){
+                $orders[$i]['day'] = Carbon::now()->diffInDays($orders[$i]['created_at']);
+            }
+            else if(Carbon::now()->diffInMinutes($orders[$i]['created_at'])>60){
                 $orders[$i]['hour'] = Carbon::now()->diffInHours($orders[$i]['created_at']);
             }
             else{
@@ -54,15 +67,19 @@ class OrderController extends Controller
     public function getOrders(Request $request){
 
 
-        $orders = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
-            ->where('created_at','<',Carbon::today()->addHour(24)->toDateTimeString())
-            ->orderBy('id','desc')
+        // $orders = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
+        $orders = DB::table('orders')
+            // ->where('created_at','<',Carbon::today()->addHour(24)->toDateTimeString())
+            ->orderBy('id','dsc')
             ->skip($this->skip * ($request->num - 1))->take($this->skip)->get();
 
         $orders = json_decode($orders,true);
         for ($i=0;$i<count($orders) ; $i++){
             $orders[$i]['order'] = unserialize($orders[$i]['order']);
-            if(Carbon::now()->diffInMinutes($orders[$i]['created_at'])>60){
+            if(Carbon::now()->diffInHours($orders[$i]['created_at'])>24){
+                $orders[$i]['day'] = Carbon::now()->diffInDays($orders[$i]['created_at']);
+            }
+            else if(Carbon::now()->diffInMinutes($orders[$i]['created_at'])>60){
                 $orders[$i]['hour'] = Carbon::now()->diffInHours($orders[$i]['created_at']);
             }
             else{
@@ -79,19 +96,26 @@ class OrderController extends Controller
         DB::table('orders')->where('id',$request->id)->update(['delivered'=>'1']);
         DB::table('orders')->where('id',$request->id)->update(['pending'=>'0']);
         if($request->has('time')){
-            $orders = DB::table('orders')->where('created_at','>=',Carbon::yesterday()->toDateTimeString())
-            ->where('created_at','<',Carbon::today()->toDateTimeString())->orderBy('id','dsc')
+            $orders = DB::table('orders')
+            // ->where('created_at','>=',Carbon::yesterday()->toDateTimeString())
+            // ->where('created_at','<',Carbon::today()->toDateTimeString())
+            ->orderBy('id','dsc')
             ->skip($this->skip * ($request->num - 1))->take($this->skip)->get();
         }else{
-            $orders = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
-                ->where('created_at','<',Carbon::tomorrow()->toDateTimeString())->orderBy('created_at','dsc')
+            $orders = DB::table('orders')
+            // ->where('created_at','>=',Carbon::today()->toDateTimeString())
+                // ->where('created_at','<',Carbon::tomorrow()->toDateTimeString())
+                ->orderBy('id','dsc')
                 ->skip($this->skip * ($request->num - 1))->take($this->skip)->get();
 
         }
         $orders = json_decode($orders,true);
         for ($i=0;$i<count($orders) ; $i++){
             $orders[$i]['order'] = unserialize($orders[$i]['order']);
-            if(Carbon::now()->diffInMinutes($orders[$i]['created_at'])>60){
+           if(Carbon::now()->diffInHours($orders[$i]['created_at'])>24){
+                $orders[$i]['day'] = Carbon::now()->diffInDays($orders[$i]['created_at']);
+            }
+            else if(Carbon::now()->diffInMinutes($orders[$i]['created_at'])>60){
                 $orders[$i]['hour'] = Carbon::now()->diffInHours($orders[$i]['created_at']);
             }
             else{
@@ -114,12 +138,16 @@ class OrderController extends Controller
 
         DB::table('orders')->where('id',$request->id)->update(['pending'=>1]);
         if($request->has('time')){
-            $orders = DB::table('orders')->where('created_at','>=',Carbon::yesterday()->toDateTimeString())->
-            where('created_at','<',Carbon::today()->toDateTimeString())->orderBy('id','dsc')
+            $orders = DB::table('orders')
+            // ->where('created_at','>=',Carbon::yesterday()->toDateTimeString())
+            // ->where('created_at','<',Carbon::today()->toDateTimeString())
+            ->orderBy('id','desc')
             ->skip($this->skip * ($request->num - 1))->take($this->skip)->get();
         }else{
-            $orders = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
-                ->where('created_at','<',Carbon::tomorrow()->toDateTimeString())->orderBy('created_at','dsc')
+            $orders = DB::table('orders')
+                // ->where('created_at','>=',Carbon::today()->toDateTimeString())
+                // ->where('created_at','<',Carbon::tomorrow()->toDateTimeString())
+                ->orderBy('id','desc')
                 ->skip($this->skip * ($request->num - 1))->take($this->skip)->get();
 
         }
@@ -127,7 +155,10 @@ class OrderController extends Controller
         $orders = json_decode($orders,true);
         for ($i=0;$i<count($orders) ; $i++){
             $orders[$i]['order'] = unserialize($orders[$i]['order']);
-            if(Carbon::now()->diffInMinutes($orders[$i]['created_at'])>60){
+           if(Carbon::now()->diffInHours($orders[$i]['created_at'])>24){
+                $orders[$i]['day'] = Carbon::now()->diffInDays($orders[$i]['created_at']);
+            }
+            else if(Carbon::now()->diffInMinutes($orders[$i]['created_at'])>60){
                 $orders[$i]['hour'] = Carbon::now()->diffInHours($orders[$i]['created_at']);
             }
             else{
@@ -144,19 +175,26 @@ class OrderController extends Controller
 
         DB::table('orders')->where('id',$request->id)->update(['paid'=>'1']);
         if($request->has('time')){
-            $orders = DB::table('orders')->where('created_at','>=',Carbon::yesterday()->toDateTimeString())
-            ->where('created_at','<',Carbon::today()->toDateTimeString())->orderBy('id','dsc')
+            $orders = DB::table('orders')
+            // ->where('created_at','>=',Carbon::yesterday()->toDateTimeString())
+            // ->where('created_at','<',Carbon::today()->toDateTimeString())
+            ->orderBy('id','dsc')
             ->skip($this->skip * ($request->num - 1))->take($this->skip)->get();
         }else{
-            $orders = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
-                ->where('created_at','<',Carbon::tomorrow()->toDateTimeString())->orderBy('created_at','dsc')
+            $orders = DB::table('orders')
+            // ->where('created_at','>=',Carbon::today()->toDateTimeString())
+            // ->where('created_at','<',Carbon::tomorrow()->toDateTimeString())
+            ->orderBy('id','desc')
                 ->skip($this->skip * ($request->num - 1))->take($this->skip)->get();
 
         }
         $orders = json_decode($orders,true);
         for ($i=0;$i<count($orders) ; $i++){
             $orders[$i]['order'] = unserialize($orders[$i]['order']);
-            if(Carbon::now()->diffInMinutes($orders[$i]['created_at'])>60){
+           if(Carbon::now()->diffInHours($orders[$i]['created_at'])>24){
+                $orders[$i]['day'] = Carbon::now()->diffInDays($orders[$i]['created_at']);
+            }
+            else if(Carbon::now()->diffInMinutes($orders[$i]['created_at'])>60){
                 $orders[$i]['hour'] = Carbon::now()->diffInHours($orders[$i]['created_at']);
             }
             else{
@@ -417,6 +455,7 @@ public function cancel(Request $request){
 
     try{
         $cancels = DB::table('cancels')->count();
+        $cancels = ceil($cancels / $this->skip);
     // $dates = DB::table('cancels')->orderBy('id','dsc')->pluck('created_at');
     // for($i=0 ; $i<$cancels);$i++){
     //     $cancels[$i]->created_at = Jalalian::fromCarbon(Carbon::parse($dates[$i]))->toString();
@@ -468,16 +507,18 @@ remove order from orders table
             Cache::put('order_number',Cache::get('order_number')-1,1440);
         }
 
-        $orders = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
+        $orders = DB::table('orders')
+        ->where('created_at','>=',Carbon::today()->toDateTimeString())
         ->where('created_at','<',Carbon::today()->addHour(24)->toDateTimeString())
         ->orderBy('id','asc')->chunkById(1200,function($queries){
             foreach($queries as $keys => $query){
                 DB::table('orders')->where('id',$query->id)->update(['order_number'=>$keys + 1]);
             }
         });
-        $orders = DB::table('orders')->where('created_at','>=',Carbon::today()->toDateTimeString())
-        ->where('created_at','<',Carbon::today()->addHour(24)->toDateTimeString())
-        ->orderBy('created_at','dsc')
+        $orders = DB::table('orders')
+        // ->where('created_at','>=',Carbon::today()->toDateTimeString())
+        // ->where('created_at','<',Carbon::today()->addHour(24)->toDateTimeString())
+        ->orderBy('id','desc')
         ->skip($this->skip * ($request->num - 1))->take($this->skip)->get();
 
         if($request->has('old')){
@@ -488,7 +529,10 @@ remove order from orders table
              $orders = json_decode($orders,true);
         for ($i=0;$i<count($orders) ; $i++){
             $orders[$i]['order'] = unserialize($orders[$i]['order']);
-            if(Carbon::now()->diffInMinutes($orders[$i]['created_at'])>60){
+         if(Carbon::now()->diffInHours($orders[$i]['created_at'])>24){
+                $orders[$i]['day'] = Carbon::now()->diffInDays($orders[$i]['created_at']);
+            }
+            else if(Carbon::now()->diffInMinutes($orders[$i]['created_at'])>60){
                 $orders[$i]['hour'] = Carbon::now()->diffInHours($orders[$i]['created_at']);
             }
             else{
@@ -507,7 +551,9 @@ remove order from orders table
         ->skip($this->skip * ($request->num - 1))->take($this->skip)->get();
 
         try{
-        $dates = DB::table('cancels')->orderBy('id','dsc')->pluck('created_at');
+         $dates = DB::table('cancels')->orderBy('id','desc')
+        ->skip($this->skip * ($request->num - 1))->take($this->skip)->pluck('created_at');
+
         for($i=0 ; $i<count($orders);$i++){
             $orders[$i]->created_at = Jalalian::fromCarbon(Carbon::parse($dates[$i]))->toString();
             $orders[$i]->order = unserialize($orders[$i]->order);

@@ -67,6 +67,10 @@ class AuthController extends Controller
             Cache::forever('warn2',0);
             Cache::forever('warn3',0);
             Cache::forever('warn4',0);
+            $query = DB::table('activations')->first();
+            if(!is_null($query)){
+                 DB::table('activations')->delete();
+            }
             $resp = $this->codeGenerator();
             $randomNumber = $resp[0];
             // if(!Cache::has('randomNumber')){
@@ -117,7 +121,7 @@ class AuthController extends Controller
     }
 
     public function codeGenerator() {
-        $randomNumber = str_random(5);
+        $randomNumber = strtolower(str_random(5));
         $cipher = "aes-128-gcm";
         $key1 = "sahand";
         $key2 = "mohammad";

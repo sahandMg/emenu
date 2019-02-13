@@ -82,17 +82,30 @@ class ManagerController extends Controller
 
                 DB::table('restaurants')->update(['orderCode' => '1']);
             }
-        }
+
+              if($request->orderCode == 'off'){
+
+                  DB::table('restaurants')->update(['orderCode' => '0']);
+              }
+
+
+          }
         // else{
         //     DB::table('restaurants')->update(['orderCode' => '0']);
         // }
-
+//    dd($request->all());
         if($request->has('payMethod')){
 
             if($request->payMethod == 'on'){
 
                 DB::table('restaurants')->update(['payMethod' => '1']);
             }
+            if($request->payMethod == 'off'){
+
+                DB::table('restaurants')->update(['payMethod' => '0']);
+            }
+
+
         }
         // else{
         //     DB::table('restaurants')->update(['payMethod' => '0']);
@@ -102,6 +115,11 @@ class ManagerController extends Controller
             if($request->tableCounting == 'on'){
 
                 DB::table('restaurants')->update(['tableCounting' => '1']);
+            }
+
+            if($request->tableCounting == 'off'){
+
+                DB::table('restaurants')->update(['tableCounting' => '0']);
             }
         }
         // else{

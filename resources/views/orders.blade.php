@@ -62,7 +62,9 @@
              </table>
            </div>
         </td>
-        <td><span v-if="order.hour > 0"> @{{ order.hour }} ساعت قبل</span><span v-if="order.minute >= 0"> @{{ order.minute }} دقیقه قبل</span></td>
+        <td>
+          <span v-if="order.day > 0"> @{{ order.day }} روز قبل</span>
+        <span v-if="order.hour > 0"> @{{ order.hour }} ساعت قبل</span><span v-if="order.minute >= 0"> @{{ order.minute }} دقیقه قبل</span></td>
         <td>
            <span v-if="order.price*(1+tax/100)%1000 != 0">@{{(parseInt(order.price*(1+tax/100)/1000))+","+parseInt((order.price*(1+tax/100))%1000)}}</span>
            <span v-if="order.price*(1+tax/100)%1000 == 0">@{{(parseInt(order.price*(1+tax/100)/1000))+","+'000'}}</span>
@@ -320,7 +322,7 @@
             $(".pagination").append(`<li class="page-item active"><a class="page-link" href="#">`+(parseInt(i)+1)+`</a></li>`);
           } else {
              $(".pagination").append(`<li class="page-item"><a class="page-link" href="#">`+(parseInt(i)+1)+`</a></li>`);
-          }     
+          }
         }
         var numberOfPage = 1 ;
 

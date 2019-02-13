@@ -40,31 +40,39 @@
                 </div>
                 <!-- <div class="form-check"> -->
                 <label class="container-checkBox">پرداخت بعد از ثبت سفارش :
-                    @if($restaurant->payMethod == 1)
-                        <input name="payMethod" type="checkbox" checked="checked">
+{{--                    @if($restaurant->payMethod == 1)--}}
+                    <input name="payMethod" type="hidden" value="off" >
+                    <input name="payMethod" type="checkbox" >
                         <span class="checkmark"></span>
-                        @else
-                        <input name="payMethod" type="checkbox">
-                        <span class="checkmark"></span>
-                        @endif
+                        {{--@else--}}
+
+
+                        {{--@endif--}}
                 </label>
                 <label class="container-checkBox">اعمال شماره بندی میزها :
+
                     @if($restaurant->tableCounting == 1)
-                        <input name="tableCounting" type="checkbox" checked="checked">
+                        <input name="tableCounting" type="checkbox" checked>
+
                         <span class="checkmark"></span>
                     @else
+
+                        <input name="tableCounting" type="hidden" value="off" >
                         <input name="tableCounting" type="checkbox">
+
                         <span class="checkmark"></span>
                     @endif
                 </label>
                   <label class="container-checkBox">کد شناسایی سفارش :
-                    @if($restaurant->orderCode == 1)
-                        <input name="orderCode" type="checkbox" checked="checked">
+{{--                    @if($restaurant->orderCode == 1)--}}
+
+
                         <span class="checkmark"></span>
-                    @else
-                        <input name="orderCode" type="checkbox">
+                    {{--@else--}}
+                          <input name="orderCode" type="hidden" value="off" >
+                      <input name="orderCode" type="checkbox" >
                         <span class="checkmark"></span>
-                    @endif
+                    {{--@endif--}}
                 </label>
                 <!-- <label class="form-check-label">
                   <input type="checkbox" class="form-check-input" value=""> پرداخت قبل از ثبت سفارش
