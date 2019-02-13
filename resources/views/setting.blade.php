@@ -40,14 +40,14 @@
                 </div>
                 <!-- <div class="form-check"> -->
                 <label class="container-checkBox">پرداخت بعد از ثبت سفارش :
-{{--                    @if($restaurant->payMethod == 1)--}}
-                    <input name="payMethod" type="hidden" value="off" >
-                    <input name="payMethod" type="checkbox" >
+                    @if($restaurant->payMethod == 1)
+                        <input name="payMethod" type="checkbox"  checked>
                         <span class="checkmark"></span>
-                        {{--@else--}}
-
-
-                        {{--@endif--}}
+                        @else
+                        <input name="payMethod" type="hidden" value="off" >
+                        <input name="payMethod" type="checkbox" >
+                        <span class="checkmark"></span>
+                        @endif
                 </label>
                 <label class="container-checkBox">اعمال شماره بندی میزها :
 
@@ -64,15 +64,15 @@
                     @endif
                 </label>
                   <label class="container-checkBox">کد شناسایی سفارش :
-{{--                    @if($restaurant->orderCode == 1)--}}
+                    @if($restaurant->orderCode == 1)
 
-
+                          <input name="orderCode" type="checkbox"  checked>
                         <span class="checkmark"></span>
-                    {{--@else--}}
+                    @else
                           <input name="orderCode" type="hidden" value="off" >
                       <input name="orderCode" type="checkbox" >
                         <span class="checkmark"></span>
-                    {{--@endif--}}
+                    @endif
                 </label>
                 <!-- <label class="form-check-label">
                   <input type="checkbox" class="form-check-input" value=""> پرداخت قبل از ثبت سفارش
