@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c07761d3c8e96af41fc15372fb88331",
+    "content-hash": "9ac5ecac30d9b37b037c36209a2d284b",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -911,6 +911,44 @@
                 "storage"
             ],
             "time": "2018-09-14T15:30:29+00:00"
+        },
+        {
+            "name": "lepiaf/serialport",
+            "version": "v1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lepiaf/serialport.git",
+                "reference": "8d7041c7caf1ad222a6090eaccb6ab738e5419ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lepiaf/serialport/zipball/8d7041c7caf1ad222a6090eaccb6ab738e5419ed",
+                "reference": "8d7041c7caf1ad222a6090eaccb6ab738e5419ed",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "lepiaf\\SerialPort\\": "src/lepiaf/SerialPort"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thierry Thuon",
+                    "email": "lepiaf@users.noreply.github.com"
+                }
+            ],
+            "description": "Serial port access convenience class",
+            "time": "2018-09-12T18:06:45+00:00"
         },
         {
             "name": "mike42/escpos-php",

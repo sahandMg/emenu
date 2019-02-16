@@ -10,6 +10,7 @@
         "jenssegers/agent": "^2.6",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
+        "lepiaf/serialport": "^1.0",
         "mike42/escpos-php": "^2.0",
         "morilog/jalali": "^3.0",
         "niklasravnsborg/laravel-pdf": "^2.0"

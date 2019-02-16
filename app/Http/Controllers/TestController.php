@@ -8,13 +8,20 @@
 
 namespace App\Http\Controllers;
 
+include(app_path().'/Http/Controllers/CallerId/PhpSerial.php');
 
+use Illuminate\Support\Facades\Artisan;
 use Mike42\Escpos\CapabilityProfiles\DefaultCapabilityProfile;
 use Mike42\Escpos\ImagickEscposImage;
 use Mike42\Escpos\PrintBuffers\ImagePrintBuffer;
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\Printer;
+use lepiaf\SerialPort\SerialPort;
+use lepiaf\SerialPort\Parser\SeparatorParser;
+use lepiaf\SerialPort\Configure\TTYMacConfigure;
+use lepiaf\SerialPort\Configure\TTYConfigure;
+use App\Http\Controllers\CallerId\PhpSerial;
 
 class TestController extends Controller
 {
@@ -56,6 +63,52 @@ class TestController extends Controller
      }
 
 
+ }
+
+ public function serial(){
+
+     $cmd = app_path().'/Http/Controllers/IDCaller/IdCaller.exe';
+
+     $last_line = passthru ($cmd, $retval);
+    dd($retval);
+
+     // ====================== Unlimited Loop Happens =========================
+
+//      $serialPort = new SerialPort(new SeparatorParser(), new TTYConfigure());
+//      $serialPort->open("/dev/tty.usbmodem14201");
+//     dd( $serialPort->read());
+//      while ($data = $serialPort->read()) {
+//          echo $data."\n";
+//
+//          if ($data === "OK") {
+//              $serialPort->write("1\n");
+//              $serialPort->close();
+//          }
+//      }
+
+     // =================  Is not implemented for Windows !! ==============================
+
+
+//   $serial = new PhpSerial();
+//   $serial->findPhpSerial();
+//
+//// First we must specify the device. This works on both linux and windows (if
+//// your linux serial device is /dev/ttyS0 for COM1, etc)
+//$serial->deviceSet("COM6");
+//
+//// We can change the baud rate, parity, length, stop bits, flow control
+//$serial->confBaudRate(9600);
+//$serial->confParity("none");
+//$serial->confCharacterLength(8);
+//$serial->confStopBits(1);
+//$serial->confFlowControl("none");
+//
+//// Then we need to open it
+//$serial->deviceOpen();
+//
+//// To write into
+////$serial->sendMessage("Hello !");
+//     $serial->readPort();
  }
 
 

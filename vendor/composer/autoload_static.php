@@ -30,6 +30,10 @@ class ComposerStaticInitcd9bffd42f67a90d063cf58992864d90
         array (
             'niklasravnsborg\\LaravelPdf\\' => 27,
         ),
+        'l' => 
+        array (
+            'lepiaf\\SerialPort\\' => 18,
+        ),
         'X' => 
         array (
             'XdgBaseDir\\' => 11,
@@ -139,6 +143,10 @@ class ComposerStaticInitcd9bffd42f67a90d063cf58992864d90
         'niklasravnsborg\\LaravelPdf\\' => 
         array (
             0 => __DIR__ . '/..' . '/niklasravnsborg/laravel-pdf/src/LaravelPdf',
+        ),
+        'lepiaf\\SerialPort\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/lepiaf/serialport/src/lepiaf/SerialPort',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -378,6 +386,7 @@ class ComposerStaticInitcd9bffd42f67a90d063cf58992864d90
         'App\\Activation' => __DIR__ . '/../..' . '/app/Activation.php',
         'App\\Cashier' => __DIR__ . '/../..' . '/app/Cashier.php',
         'App\\Category' => __DIR__ . '/../..' . '/app/Category.php',
+        'App\\Classes\\CallerId' => __DIR__ . '/../..' . '/app/Classes/CallerId.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Food' => __DIR__ . '/../..' . '/app/Food.php',
@@ -396,6 +405,7 @@ class ComposerStaticInitcd9bffd42f67a90d063cf58992864d90
         'App\\Http\\Controllers\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReportController.php',
         'App\\Http\\Controllers\\TestController' => __DIR__ . '/../..' . '/app/Http/Controllers/TestController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
+        'App\\Http\\Controllers\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/UsersController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\ActivationMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/ActivationMiddleware.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -407,6 +417,7 @@ class ComposerStaticInitcd9bffd42f67a90d063cf58992864d90
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Middleware\\customRedirect' => __DIR__ . '/../..' . '/app/Http/Middleware/customRedirect.php',
+        'App\\Jobs\\TestJob' => __DIR__ . '/../..' . '/app/Jobs/TestJob.php',
         'App\\Manager' => __DIR__ . '/../..' . '/app/Manager.php',
         'App\\Message' => __DIR__ . '/../..' . '/app/Message.php',
         'App\\Order' => __DIR__ . '/../..' . '/app/Order.php',
@@ -3969,6 +3980,19 @@ class ComposerStaticInitcd9bffd42f67a90d063cf58992864d90
         'Whoops\\Util\\TemplateHelper' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Util/TemplateHelper.php',
         'XdgBaseDir\\Xdg' => __DIR__ . '/..' . '/dnoegel/php-xdg-base-dir/src/Xdg.php',
         'fpdi_pdf_parser' => __DIR__ . '/..' . '/setasign/fpdi/fpdi_pdf_parser.php',
+        'lepiaf\\SerialPort\\Configure\\ConfigureInterface' => __DIR__ . '/..' . '/lepiaf/serialport/src/lepiaf/SerialPort/Configure/ConfigureInterface.php',
+        'lepiaf\\SerialPort\\Configure\\ModeConfigure' => __DIR__ . '/..' . '/lepiaf/serialport/src/lepiaf/SerialPort/Configure/ModeConfigure.php',
+        'lepiaf\\SerialPort\\Configure\\TTYConfigure' => __DIR__ . '/..' . '/lepiaf/serialport/src/lepiaf/SerialPort/Configure/TTYConfigure.php',
+        'lepiaf\\SerialPort\\Configure\\TTYMacConfigure' => __DIR__ . '/..' . '/lepiaf/serialport/src/lepiaf/SerialPort/Configure/TTYMacConfigure.php',
+        'lepiaf\\SerialPort\\Exception\\DeviceNotAvailable' => __DIR__ . '/..' . '/lepiaf/serialport/src/lepiaf/SerialPort/Exception/DeviceNotAvailable.php',
+        'lepiaf\\SerialPort\\Exception\\DeviceNotFound' => __DIR__ . '/..' . '/lepiaf/serialport/src/lepiaf/SerialPort/Exception/DeviceNotFound.php',
+        'lepiaf\\SerialPort\\Exception\\DeviceNotOpened' => __DIR__ . '/..' . '/lepiaf/serialport/src/lepiaf/SerialPort/Exception/DeviceNotOpened.php',
+        'lepiaf\\SerialPort\\Exception\\LogicException' => __DIR__ . '/..' . '/lepiaf/serialport/src/lepiaf/SerialPort/Exception/LogicException.php',
+        'lepiaf\\SerialPort\\Exception\\RuntimeException' => __DIR__ . '/..' . '/lepiaf/serialport/src/lepiaf/SerialPort/Exception/RuntimeException.php',
+        'lepiaf\\SerialPort\\Exception\\WriteNotAllowed' => __DIR__ . '/..' . '/lepiaf/serialport/src/lepiaf/SerialPort/Exception/WriteNotAllowed.php',
+        'lepiaf\\SerialPort\\Parser\\ParserInterface' => __DIR__ . '/..' . '/lepiaf/serialport/src/lepiaf/SerialPort/Parser/ParserInterface.php',
+        'lepiaf\\SerialPort\\Parser\\SeparatorParser' => __DIR__ . '/..' . '/lepiaf/serialport/src/lepiaf/SerialPort/Parser/SeparatorParser.php',
+        'lepiaf\\SerialPort\\SerialPort' => __DIR__ . '/..' . '/lepiaf/serialport/src/lepiaf/SerialPort/SerialPort.php',
         'niklasravnsborg\\LaravelPdf\\Facades\\Pdf' => __DIR__ . '/..' . '/niklasravnsborg/laravel-pdf/src/LaravelPdf/Facades/Pdf.php',
         'niklasravnsborg\\LaravelPdf\\Pdf' => __DIR__ . '/..' . '/niklasravnsborg/laravel-pdf/src/LaravelPdf/Pdf.php',
         'niklasravnsborg\\LaravelPdf\\PdfServiceProvider' => __DIR__ . '/..' . '/niklasravnsborg/laravel-pdf/src/LaravelPdf/PdfServiceProvider.php',
